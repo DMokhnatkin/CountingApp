@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using CountingApp.Views;
 using Xamarin.Forms;
 
 namespace CountingApp
@@ -13,7 +13,7 @@ namespace CountingApp
 		{
 			InitializeComponent();
 
-			MainPage = new CountingApp.MainPage();
+			MainPage = new TransactionsPage();
 		}
 
 		protected override void OnStart ()
