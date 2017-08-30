@@ -22,11 +22,16 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Transactions\Purchase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Transactions\Transaction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BaseViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ContributionItemViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PurchaseItemViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\TransactionItemViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\TransactionsViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Transactions\CreatePurchaseViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Transactions\CreatePurchasePage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\TransactionsPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Transactions\CreateTransactionPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -47,5 +52,15 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Models\Transactions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Transactions\CreatePurchasePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Transactions\CreateTransactionPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

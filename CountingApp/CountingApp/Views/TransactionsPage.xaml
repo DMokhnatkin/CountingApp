@@ -2,14 +2,18 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CountingApp.Views.TransactionsPage">
-    <ListView ItemsSource="{Binding Transactions}" HasUnevenRows="True">
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <ViewCell>
-                    <Label> Transaction </Label>
-                </ViewCell>
-            </DataTemplate>
-        </ListView.ItemTemplate>
-
-    </ListView>
+    <StackLayout>
+        <ListView ItemsSource="{Binding Transactions}" HasUnevenRows="True">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Label>Transaction</Label>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Command="{Binding CreateTransactionCommand}">
+            <Label>New transaction</Label>
+        </Button>
+    </StackLayout>
 </ContentPage>

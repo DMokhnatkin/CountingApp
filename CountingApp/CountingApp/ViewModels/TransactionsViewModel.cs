@@ -1,32 +1,39 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
 using CountingApp.Models;
+using CountingApp.Models.Transactions;
+using CountingApp.Views;
+using CountingApp.Views.Transactions;
+using Xamarin.Forms;
 
 namespace CountingApp.ViewModels
 {
     public class TransactionsViewModel : BaseViewModel
     {
-        private ObservableCollection<PurchaseItemViewModel> _transactions;
-        public ObservableCollection<PurchaseItemViewModel> Transactions
+        private ObservableCollection<Transaction> _transactions;
+        public ObservableCollection<Transaction> Transactions
         {
             get => _transactions;
             set => SetProperty(ref _transactions, value);
         }
 
-        public TransactionsViewModel()
+        public ICommand CreateTransactionCommand { get; set; }
+
+        private INavigation _navigation;
+
+        public TransactionsViewModel(INavigation navigation)
         {
-            Transactions = new ObservableCollection<PurchaseItemViewModel>(new []
-            {
-                new PurchaseItemViewModel(new Purchase{ Contributions = new []
-                {
-                    new Contribution { Amount = 1000, PersonId = new Person { DisplayName = "ДМ" }},
-                    new Contribution { Amount = 200, PersonId = new Person { DisplayName = "АМ" }}
-                }}),
-                new PurchaseItemViewModel(new Purchase{ Contributions = new []
-                {
-                    new Contribution { Amount = 1000, PersonId = new Person { DisplayName = "ДМ" }},
-                    new Contribution { Amount = 1000, PersonId = new Person { DisplayName = "АМ" }}
-                }}), 
-            });
+            _navigation = navigation;
+
+            CreateTransactionCommand = new Command(AddTransactionExecute);
+
+            Transactions = new ObservableCollection<Transaction>();
+        }
+
+        private async void AddTransactionExecute()
+        {
+            await _navigation.PushModalAsync(new CreateTransactionPage());
         }
     }
 }

@@ -13,7 +13,7 @@ namespace CountingApp.Views
         {
             InitializeComponent();
 
-            BindingContext = _viewModel = new TransactionsViewModel();
+            BindingContext = _viewModel = new TransactionsViewModel(Navigation);
         }
     }
 }
