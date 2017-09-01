@@ -21,6 +21,11 @@ namespace CountingApp.Droid
 
 			global::Xamarin.Forms.Forms.Init (this, bundle);
 			LoadApplication (new CountingApp.App ());
+
+		    AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
+		    {
+
+		    };
 		}
 	}
 }

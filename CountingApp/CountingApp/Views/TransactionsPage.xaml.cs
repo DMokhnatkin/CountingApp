@@ -1,4 +1,5 @@
-﻿using CountingApp.ViewModels;
+﻿using System;
+using CountingApp.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -13,7 +14,12 @@ namespace CountingApp.Views
         {
             InitializeComponent();
 
-            BindingContext = _viewModel = new TransactionsViewModel(Navigation);
+            BindingContext = _viewModel = new TransactionsViewModel();
+        }
+
+        private void AddPurchase_OnClicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new PurchasePage());
         }
     }
 }

@@ -11,5 +11,10 @@ namespace CountingApp.Models
         /// Время проведения операции
         /// </summary>
         public DateTime Timestamp { get; set; }
+
+        /// <summary>
+        /// Сумма транзакции
+        /// </summary>
+        public decimal TotalPriceRub { get; set; }
     }
 }

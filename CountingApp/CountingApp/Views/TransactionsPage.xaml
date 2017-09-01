@@ -1,19 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CountingApp.Views.TransactionsPage">
+             xmlns:helpers="clr-namespace:CountingApp.Helpers;assembly=CountingApp.Android"
+             x:Class="CountingApp.Views.TransactionsPage"
+             Title="Транзакции">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="purchase.png" Clicked="AddPurchase_OnClicked"/>
+    </ContentPage.ToolbarItems>
     <StackLayout>
         <ListView ItemsSource="{Binding Transactions}" HasUnevenRows="True">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Label>Transaction</Label>
+                        <Label>Транзакции</Label>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button Command="{Binding CreateTransactionCommand}">
-            <Label>New transaction</Label>
-        </Button>
     </StackLayout>
 </ContentPage>

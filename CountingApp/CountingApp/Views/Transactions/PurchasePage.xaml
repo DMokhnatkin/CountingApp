@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CountingApp.Views.PurchasePage"
+             Title="Покупка">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="done.png"/>
+    </ContentPage.ToolbarItems>
+    <TableView HasUnevenRows="True">
+        <TableRoot>
+            <TableSection Title="Спонсоры">
+                <ViewCell>
+                    <StackLayout Orientation="Vertical" VerticalOptions="Center">
+                        <Button Text="Изменить спонсоров" Clicked="ChangeContributors_OnClicked"/>
+                        <ListView x:Name="ContributorsListView" ItemsSource="{Binding Contributors}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <EntryCell Label="{Binding DisplayName}"></EntryCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackLayout>
+                </ViewCell>
+            </TableSection>
+            <TableSection Title="Нахлебники">
+                <ViewCell>
+                    <ListView ItemsSource="{Binding Freeloaders}" SeparatorVisibility="None">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextCell Text="{Binding DisplayName}"></TextCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <Button Text="Изменить нахлебников"/>
+                    </ListView>
+                </ViewCell>
+            </TableSection>
+        </TableRoot>
+    </TableView>
+</ContentPage>

@@ -12,6 +12,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Repositories\People\IPeopleRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Repositories\People\PeopleRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Repositories\Transactions\TransactionsRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ImageResourceExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ObservableObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
@@ -22,16 +25,19 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Transactions\Purchase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Transactions\Transaction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BaseViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\TransactionItemViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SelectPeoplePageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\TransactionsViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Transactions\CreatePurchaseViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\Transactions\CreatePurchasePage.xaml.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Transactions\PurchaseViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\MasterPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\SelectPeoplePage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Transactions\PurchasePage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\TransactionsPage.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\Transactions\CreateTransactionPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -54,12 +60,17 @@
     <Folder Include="$(MSBuildThisFileDirectory)Models\Transactions\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Transactions\CreatePurchasePage.xaml">
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Transactions\PurchasePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Transactions\CreateTransactionPage.xaml">
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\SelectPeoplePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\MasterPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

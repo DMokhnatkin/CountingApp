@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CountingApp.Views.SelectPeoplePage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="done.png" Clicked="MenuItem_OnClicked"/>
+    </ContentPage.ToolbarItems>
+    <ListView ItemsSource="{Binding People}" IsRefreshing="{Binding IsBusy}" IsPullToRefreshEnabled="True" >
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <SwitchCell Text="{Binding DisplayName}" On="{Binding IsSelected}"/>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+</ContentPage>
