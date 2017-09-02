@@ -6,34 +6,51 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Icon="done.png"/>
     </ContentPage.ToolbarItems>
-    <TableView HasUnevenRows="True">
-        <TableRoot>
-            <TableSection Title="Спонсоры">
-                <ViewCell>
-                    <StackLayout Orientation="Vertical" VerticalOptions="Center">
-                        <Button Text="Изменить спонсоров" Clicked="ChangeContributors_OnClicked"/>
-                        <ListView x:Name="ContributorsListView" ItemsSource="{Binding Contributors}">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <EntryCell Label="{Binding DisplayName}"></EntryCell>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </StackLayout>
-                </ViewCell>
-            </TableSection>
-            <TableSection Title="Нахлебники">
-                <ViewCell>
-                    <ListView ItemsSource="{Binding Freeloaders}" SeparatorVisibility="None">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <TextCell Text="{Binding DisplayName}"></TextCell>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                        <Button Text="Изменить нахлебников"/>
-                    </ListView>
-                </ViewCell>
-            </TableSection>
-        </TableRoot>
-    </TableView>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="TitleStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <StackLayout>
+        <!-- Спонсоры заголовок -->
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="5">
+            <Label Text="Спонсоры" Style="{StaticResource TitleStyle}"/>
+            <Image Source="ic_assignment_ind_black_24dp.png" Opacity="0.6">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ChangeContributors_OnClicked" />
+                </Image.GestureRecognizers>
+            </Image>
+        </StackLayout>
+
+        <!-- Спонсоры список -->
+        <ListView x:Name="ContributorsListView" ItemsSource="{Binding Contributors}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <EntryCell Label="{Binding DisplayName}"></EntryCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <!-- Нахлебники заголовок -->
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="5">
+            <Label Text="Нахлебники" Style="{StaticResource TitleStyle}"/>
+            <Image Source="ic_assignment_ind_black_24dp.png" Opacity="0.6">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ChangeFreeloaders_OnClicked" />
+                </Image.GestureRecognizers>
+            </Image>
+        </StackLayout>
+
+        <!-- Нахлебники список -->
+        <ListView ItemsSource="{Binding Freeloaders}" SeparatorVisibility="None">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding DisplayName}"></TextCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
 </ContentPage>

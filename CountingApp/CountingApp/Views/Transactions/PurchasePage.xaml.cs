@@ -62,5 +62,10 @@ namespace CountingApp.Views
 	        });
 	        await Navigation.PushAsync(selectPeoplePage);
 	    }
+
+	    private void ChangeFreeloaders_OnClicked(object sender, EventArgs e)
+	    {
+	        
+	    }
 	}
 }
