@@ -1,12 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:helpers="clr-namespace:CountingApp.Helpers;assembly=CountingApp.Android"
              x:Class="CountingApp.Views.TransactionsPage"
              Title="Транзакции">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Icon="purchase.png" Clicked="AddPurchase_OnClicked"/>
-    </ContentPage.ToolbarItems>
     <StackLayout>
         <ListView ItemsSource="{Binding Transactions}" HasUnevenRows="True">
             <ListView.ItemTemplate>
@@ -17,5 +13,8 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <StackLayout VerticalOptions="End" Orientation="Horizontal">
+            <Button Image="ic_shopping_cart_black_24dp.png" BackgroundColor="Transparent" Clicked="AddPurchase_OnClicked" BorderColor="Transparent"/>
+        </StackLayout>
     </StackLayout>
 </ContentPage>
