@@ -7,12 +7,8 @@ namespace CountingApp.ViewModels.Transactions
 {
     public class PurchaseViewModel : BaseViewModel
     {
-        private readonly INavigation _navigation;
-
-        public PurchaseViewModel(INavigation navigation)
+        public PurchaseViewModel()
         {
-            _navigation = navigation;
-
             Contributors = new ObservableCollection<Person>();
             Freeloaders = new ObservableCollection<Person>();
         }

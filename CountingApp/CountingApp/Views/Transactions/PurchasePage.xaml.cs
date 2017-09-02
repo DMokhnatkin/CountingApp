@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using CountingApp.Models;
@@ -18,7 +19,7 @@ namespace CountingApp.Views
 		{
 			InitializeComponent ();
 
-		    _viewModel = new PurchaseViewModel(Navigation);
+		    _viewModel = new PurchaseViewModel();
             _viewModel.Load();
 
             BindingContext = _viewModel;
@@ -28,19 +29,34 @@ namespace CountingApp.Views
 	    {
             var selectPeopleViewModel = new SelectPeoplePageViewModel();
 #pragma warning disable 4014
-	        selectPeopleViewModel.LoadPeopleListAsync();
+	        selectPeopleViewModel
+                .LoadPeopleListAsync()
+                .ContinueWith(task => 
+                    selectPeopleViewModel.SetSelected(_viewModel.Contributors.ToArray()));
 #pragma warning restore 4014
             var selectPeoplePage = new SelectPeoplePage(selectPeopleViewModel);
 
 	        MessagingCenter.Subscribe<SelectPeoplePageViewModel>(this, SelectPeoplePageViewModel.ApplyMessage, page =>
 	        {
-	            var selected = page.GetSelected();
-	            foreach (var person in selected)
+                // Нужно смержить выбранных до этого момента и выбранных после людей
+                var selectedBefore = new HashSet<Guid>(_viewModel.Contributors.Select(x => x.Id));
+	            var selectedAfter = new Dictionary<Guid, Person>(page.GetSelected().ToDictionary(x => x.Id, v => v));
+
+	            var merged = _viewModel.Contributors.ToDictionary(x => x.Id, v => v);
+
+                // Сначала удаляем тех людей которые стали unchecked
+	            foreach (var toRemove in selectedBefore.Except(selectedAfter.Keys))
 	            {
-	                if (!_viewModel.Contributors.Contains(person))
-                        _viewModel.Contributors.Add(person);
+	                merged.Remove(toRemove);
 	            }
-                _viewModel.Contributors = new ObservableCollection<Person>(_viewModel.Contributors.OrderBy(x => x.DisplayName));
+
+                // Затем добавляем тех людей, которые стали выбранны
+	            foreach (var toAdd in selectedAfter.Keys.Except(selectedBefore))
+	            {
+	                merged[toAdd] = selectedAfter[toAdd];
+	            }
+
+                _viewModel.Contributors = new ObservableCollection<Person>(merged.Values.OrderBy(x => x.DisplayName));
 
                 MessagingCenter.Unsubscribe<SelectPeoplePageViewModel>(this, SelectPeoplePageViewModel.ApplyMessage);
 	        });
