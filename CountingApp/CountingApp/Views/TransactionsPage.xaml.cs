@@ -1,5 +1,7 @@
 ﻿using System;
+using CountingApp.Models.Transactions;
 using CountingApp.ViewModels;
+using CountingApp.ViewModels.Transactions;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -27,6 +29,14 @@ namespace CountingApp.Views
 
                 MessagingCenter.Unsubscribe<PurchasePage>(this, PurchasePage.DoneMessage);
             });
+        }
+
+        private void TransactionsListView_OnItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            if (e.Item is Purchase purchase)
+            {
+                Navigation.PushAsync(new PurchasePage(new PurchaseViewModel(purchase)));
+            }
         }
     }
 }

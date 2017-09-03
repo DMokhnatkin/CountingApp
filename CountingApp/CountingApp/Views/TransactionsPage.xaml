@@ -4,11 +4,17 @@
              x:Class="CountingApp.Views.TransactionsPage"
              Title="Транзакции">
     <StackLayout>
-        <ListView ItemsSource="{Binding Transactions}" HasUnevenRows="True">
+        <ListView ItemsSource="{Binding Transactions}" HasUnevenRows="True" ItemTapped="TransactionsListView_OnItemTapped">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Label>Транзакции</Label>
+                        <StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Покупка" Style="{StaticResource TitleStyle}"></Label>
+                                <Label Text="{Binding TotalAmount}"></Label>
+                            </StackLayout>
+                            <Label Text="{Binding Timestamp}"></Label>
+                        </StackLayout>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>

@@ -16,5 +16,7 @@ namespace CountingApp.Models
         /// Сумма транзакции
         /// </summary>
         public decimal TotalPriceRub { get; set; }
+
+        public abstract decimal TotalAmount { get; }
     }
 }

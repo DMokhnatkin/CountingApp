@@ -22,29 +22,37 @@ namespace CountingApp.Views
 			InitializeComponent ();
 
 		    ViewModel = new PurchaseViewModel();
-		    ViewModel.Load();
 
             BindingContext = ViewModel;
 		}
 
-	    private async void ChangeContributors_OnClicked(object sender, EventArgs e)
+	    public PurchasePage(PurchaseViewModel viewModel)
+	    {
+	        InitializeComponent();
+
+	        ViewModel = viewModel;
+
+	        BindingContext = ViewModel;
+	    }
+
+        private async void ChangeContributors_OnClicked(object sender, EventArgs e)
 	    {
             var selectPeopleViewModel = new SelectPeoplePageViewModel();
 #pragma warning disable 4014
 	        selectPeopleViewModel
                 .LoadPeopleListAsync()
                 .ContinueWith(task => 
-                    selectPeopleViewModel.SetSelected(ViewModel.Contributors.Select(x => x.Model).ToArray()));
+                    selectPeopleViewModel.SetSelected(ViewModel.Contributions.Select(x => x.Model).ToArray()));
 #pragma warning restore 4014
             var selectPeoplePage = new SelectPeoplePage(selectPeopleViewModel);
 
 	        MessagingCenter.Subscribe<SelectPeoplePageViewModel>(this, SelectPeoplePageViewModel.ApplyMessage, page =>
 	        {
                 // Нужно смержить выбранных до этого момента и выбранных после людей
-                var selectedBefore = new HashSet<Guid>(ViewModel.Contributors.Select(x => x.Model.Id));
+                var selectedBefore = new HashSet<Guid>(ViewModel.Contributions.Select(x => x.Model.Id));
 	            var selectedAfter = new Dictionary<Guid, Person>(page.GetSelected().ToDictionary(x => x.Id, v => v));
 
-	            var merged = ViewModel.Contributors.ToDictionary(x => x.Model.Id, v => v);
+	            var merged = ViewModel.Contributions.ToDictionary(x => x.Model.Id, v => v);
 
                 // Сначала удаляем тех людей которые стали unchecked
 	            foreach (var toRemove in selectedBefore.Except(selectedAfter.Keys))
@@ -58,7 +66,7 @@ namespace CountingApp.Views
 	                merged[toAdd] = new PurchaseViewModel.ContributionViewModel(selectedAfter[toAdd]) { Amount = 0 };
 	            }
 
-	            ViewModel.Contributors = new ObservableCollection<PurchaseViewModel.ContributionViewModel>(merged.Values.OrderBy(x => x.DisplayName));
+	            ViewModel.Contributions = new ObservableCollection<PurchaseViewModel.ContributionViewModel>(merged.Values.OrderBy(x => x.DisplayName));
 
                 MessagingCenter.Unsubscribe<SelectPeoplePageViewModel>(this, SelectPeoplePageViewModel.ApplyMessage);
 	        });

@@ -6,14 +6,6 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Icon="done.png" Clicked="MenuItemDone_OnClicked"/>
     </ContentPage.ToolbarItems>
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <Style x:Key="TitleStyle" TargetType="Label">
-                <Setter Property="FontSize" Value="16"/>
-                <Setter Property="FontAttributes" Value="Bold"/>
-            </Style>
-        </ResourceDictionary>
-    </ContentPage.Resources>
     <StackLayout>
         <!-- Спонсоры заголовок -->
         <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="5">
@@ -26,10 +18,10 @@
         </StackLayout>
 
         <!-- Спонсоры список -->
-        <ListView x:Name="ContributorsListView" ItemsSource="{Binding Contributors}">
+        <ListView x:Name="ContributorsListView" ItemsSource="{Binding Contributions}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <EntryCell Label="{Binding DisplayName}"></EntryCell>
+                    <EntryCell Label="{Binding DisplayName}" Text="{Binding Amount}" Keyboard="Numeric"></EntryCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

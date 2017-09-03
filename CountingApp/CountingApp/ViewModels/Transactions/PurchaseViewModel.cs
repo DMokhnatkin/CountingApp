@@ -1,9 +1,9 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using CountingApp.Data.Repositories.People;
 using CountingApp.Models;
 using CountingApp.Models.Transactions;
-using Xamarin.Forms;
 
 namespace CountingApp.ViewModels.Transactions
 {
@@ -11,15 +11,29 @@ namespace CountingApp.ViewModels.Transactions
     {
         public PurchaseViewModel()
         {
-            Contributors = new ObservableCollection<ContributionViewModel>();
+            Contributions = new ObservableCollection<ContributionViewModel>();
             Freeloaders = new ObservableCollection<Person>();
+        }
+
+        public PurchaseViewModel(Purchase model)
+        {
+            var contributions =
+                from personModel in model.People
+                join contribution in model.Contributions on personModel.Id equals contribution.PersonId
+                select new ContributionViewModel(personModel) {Amount = contribution.Amount};
+
+            var freeloaders =
+                model.People.Where(x => model.Contributions.SingleOrDefault(y => y.PersonId == x.Id) == null).ToArray();
+
+            Contributions = new ObservableCollection<ContributionViewModel>(contributions);
+            Freeloaders = new ObservableCollection<Person>(freeloaders);
         }
 
         public void Load()
         {
             new PeopleRepository().GetAvailablePeopleAsync().ContinueWith(task =>
             {
-                Contributors.Add(new ContributionViewModel(task.Result[0]));
+                Contributions.Add(new ContributionViewModel(task.Result[0]));
 
                 Freeloaders.Add(task.Result[1]);
                 Freeloaders.Add(task.Result[2]);
@@ -28,13 +42,13 @@ namespace CountingApp.ViewModels.Transactions
             });
         }
 
-        private ObservableCollection<ContributionViewModel> _contributors;
-        public ObservableCollection<ContributionViewModel> Contributors
+        private ObservableCollection<ContributionViewModel> _contributions;
+        public ObservableCollection<ContributionViewModel> Contributions
         {
-            get => _contributors;
+            get => _contributions;
             set
             {
-                _contributors = value;
+                _contributions = value;
                 OnPropertyChanged();
             }
         }
@@ -54,8 +68,9 @@ namespace CountingApp.ViewModels.Transactions
         {
             return new Purchase
             {
-                Contributions = Contributors.Select(x => new Contribution{ Amount = x.Amount, PersonId = x.Model.Id }).ToArray(),
-                People = Contributors.Select(x => x.Model).Concat(Freeloaders).ToArray()
+                Contributions = Contributions.Select(x => new Contribution{ Amount = x.Amount, PersonId = x.Model.Id }).ToArray(),
+                People = Contributions.Select(x => x.Model).Concat(Freeloaders).ToArray(),
+                Timestamp = DateTime.Now
             };
         }
 
