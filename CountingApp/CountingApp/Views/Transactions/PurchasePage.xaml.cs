@@ -13,16 +13,18 @@ namespace CountingApp.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class PurchasePage : ContentPage
 	{
-	    private readonly PurchaseViewModel _viewModel;
+	    public const string DoneMessage = "Done";
+
+	    public PurchaseViewModel ViewModel { get; }
 
 		public PurchasePage ()
 		{
 			InitializeComponent ();
 
-		    _viewModel = new PurchaseViewModel();
-            _viewModel.Load();
+		    ViewModel = new PurchaseViewModel();
+		    ViewModel.Load();
 
-            BindingContext = _viewModel;
+            BindingContext = ViewModel;
 		}
 
 	    private async void ChangeContributors_OnClicked(object sender, EventArgs e)
@@ -32,17 +34,17 @@ namespace CountingApp.Views
 	        selectPeopleViewModel
                 .LoadPeopleListAsync()
                 .ContinueWith(task => 
-                    selectPeopleViewModel.SetSelected(_viewModel.Contributors.ToArray()));
+                    selectPeopleViewModel.SetSelected(ViewModel.Contributors.Select(x => x.Model).ToArray()));
 #pragma warning restore 4014
             var selectPeoplePage = new SelectPeoplePage(selectPeopleViewModel);
 
 	        MessagingCenter.Subscribe<SelectPeoplePageViewModel>(this, SelectPeoplePageViewModel.ApplyMessage, page =>
 	        {
                 // Нужно смержить выбранных до этого момента и выбранных после людей
-                var selectedBefore = new HashSet<Guid>(_viewModel.Contributors.Select(x => x.Id));
+                var selectedBefore = new HashSet<Guid>(ViewModel.Contributors.Select(x => x.Model.Id));
 	            var selectedAfter = new Dictionary<Guid, Person>(page.GetSelected().ToDictionary(x => x.Id, v => v));
 
-	            var merged = _viewModel.Contributors.ToDictionary(x => x.Id, v => v);
+	            var merged = ViewModel.Contributors.ToDictionary(x => x.Model.Id, v => v);
 
                 // Сначала удаляем тех людей которые стали unchecked
 	            foreach (var toRemove in selectedBefore.Except(selectedAfter.Keys))
@@ -53,10 +55,10 @@ namespace CountingApp.Views
                 // Затем добавляем тех людей, которые стали выбранны
 	            foreach (var toAdd in selectedAfter.Keys.Except(selectedBefore))
 	            {
-	                merged[toAdd] = selectedAfter[toAdd];
+	                merged[toAdd] = new PurchaseViewModel.ContributionViewModel(selectedAfter[toAdd]) { Amount = 0 };
 	            }
 
-                _viewModel.Contributors = new ObservableCollection<Person>(merged.Values.OrderBy(x => x.DisplayName));
+	            ViewModel.Contributors = new ObservableCollection<PurchaseViewModel.ContributionViewModel>(merged.Values.OrderBy(x => x.DisplayName));
 
                 MessagingCenter.Unsubscribe<SelectPeoplePageViewModel>(this, SelectPeoplePageViewModel.ApplyMessage);
 	        });
@@ -66,6 +68,12 @@ namespace CountingApp.Views
 	    private void ChangeFreeloaders_OnClicked(object sender, EventArgs e)
 	    {
 	        
+	    }
+
+	    private async void MenuItemDone_OnClicked(object sender, EventArgs e)
+	    {
+            MessagingCenter.Send(this, DoneMessage);
+	        await Navigation.PopAsync();
 	    }
 	}
 }

@@ -17,9 +17,16 @@ namespace CountingApp.Views
             BindingContext = _viewModel = new TransactionsViewModel();
         }
 
-        private void AddPurchase_OnClicked(object sender, EventArgs e)
+        private async void AddPurchase_OnClicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new PurchasePage());
+            await Navigation.PushAsync(new PurchasePage());
+
+            MessagingCenter.Subscribe<PurchasePage>(this, PurchasePage.DoneMessage, page =>
+            {
+                _viewModel.Transactions.Add(page.ViewModel.GetModel());
+
+                MessagingCenter.Unsubscribe<PurchasePage>(this, PurchasePage.DoneMessage);
+            });
         }
     }
 }

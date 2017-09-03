@@ -4,7 +4,7 @@
              x:Class="CountingApp.Views.PurchasePage"
              Title="Покупка">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Icon="done.png"/>
+        <ToolbarItem Icon="done.png" Clicked="MenuItemDone_OnClicked"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Resources>
         <ResourceDictionary>

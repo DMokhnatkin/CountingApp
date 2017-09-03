@@ -12,6 +12,11 @@ namespace CountingApp.ViewModels
             set => SetProperty(ref _transactions, value);
         }
 
+        public void CreateTransaction(Transaction transaction)
+        {
+            
+        }
+
         public TransactionsViewModel()
         {
             Transactions = new ObservableCollection<Transaction>();
