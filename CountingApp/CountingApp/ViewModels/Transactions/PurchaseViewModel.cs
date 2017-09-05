@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using CountingApp.Data.Repositories.People;
@@ -9,6 +10,11 @@ namespace CountingApp.ViewModels.Transactions
 {
     public class PurchaseViewModel : BaseViewModel
     {
+        /// <summary>
+        /// Ид транзакции (null если мы создаем новую)
+        /// </summary>
+        private readonly Guid _transactionId;
+
         public PurchaseViewModel()
         {
             Contributions = new ObservableCollection<ContributionViewModel>();
@@ -17,16 +23,17 @@ namespace CountingApp.ViewModels.Transactions
 
         public PurchaseViewModel(Purchase model)
         {
-            var contributions =
-                from personModel in model.People
-                join contribution in model.Contributions on personModel.Id equals contribution.PersonId
-                select new ContributionViewModel(personModel) {Amount = contribution.Amount};
-
-            var freeloaders =
-                model.People.Where(x => model.Contributions.SingleOrDefault(y => y.PersonId == x.Id) == null).ToArray();
+            var contributions = new List<ContributionViewModel>();
+            var people = model.People.ToDictionary(key => key.Id, val => val);
+            foreach (var contribution in model.Contributions ?? new Contribution[0])
+            {
+                contributions.Add(new ContributionViewModel(people[contribution.PersonId]) { Amount = contribution.Amount });
+            }
 
             Contributions = new ObservableCollection<ContributionViewModel>(contributions);
-            Freeloaders = new ObservableCollection<Person>(freeloaders);
+            Freeloaders = new ObservableCollection<Person>(model.ExtractFreeloaders());
+
+            _transactionId = model.Id;
         }
 
         public void Load()
@@ -46,28 +53,21 @@ namespace CountingApp.ViewModels.Transactions
         public ObservableCollection<ContributionViewModel> Contributions
         {
             get => _contributions;
-            set
-            {
-                _contributions = value;
-                OnPropertyChanged();
-            }
+            set => SetProperty(ref _contributions, value);
         }
 
         private ObservableCollection<Person> _freeloaders;
         public ObservableCollection<Person> Freeloaders
         {
             get => _freeloaders;
-            set
-            {
-                _freeloaders = value;
-                OnPropertyChanged();
-            }
+            set => SetProperty(ref _freeloaders, value);
         }
 
         public Purchase GetModel()
         {
             return new Purchase
             {
+                Id = _transactionId,
                 Contributions = Contributions.Select(x => new Contribution{ Amount = x.Amount, PersonId = x.Model.Id }).ToArray(),
                 People = Contributions.Select(x => x.Model).Concat(Freeloaders).ToArray(),
                 Timestamp = DateTime.Now

@@ -12,8 +12,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Dto\TransactionDto.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Mappers\TransactionMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\Repositories\People\IPeopleRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\Repositories\People\PeopleRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Repositories\Transactions\ITransactionsRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\Repositories\Transactions\TransactionsRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ImageResourceExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ObservableObject.cs" />
@@ -28,6 +31,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SelectPeoplePageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\TransactionsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Transactions\PurchaseViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Transactions\TransactionListItemViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\MasterPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

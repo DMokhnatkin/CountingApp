@@ -11,7 +11,7 @@
                         <StackLayout>
                             <StackLayout Orientation="Horizontal">
                                 <Label Text="Покупка" Style="{StaticResource TitleStyle}"></Label>
-                                <Label Text="{Binding TotalAmount}"></Label>
+                                <Label Text="{Binding TotalAmountRub}"></Label>
                             </StackLayout>
                             <Label Text="{Binding Timestamp}"></Label>
                         </StackLayout>

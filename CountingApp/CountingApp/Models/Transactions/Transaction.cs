@@ -7,6 +7,8 @@ namespace CountingApp.Models
     /// </summary>
     public abstract class Transaction
     {
+        public Guid Id { get; set; }
+
         /// <summary>
         /// Время проведения операции
         /// </summary>
@@ -15,8 +17,6 @@ namespace CountingApp.Models
         /// <summary>
         /// Сумма транзакции
         /// </summary>
-        public decimal TotalPriceRub { get; set; }
-
-        public abstract decimal TotalAmount { get; }
+        public abstract decimal TotalAmountRub { get; }
     }
 }

@@ -46,11 +46,11 @@ namespace CountingApp.Views
 #pragma warning restore 4014
             var selectPeoplePage = new SelectPeoplePage(selectPeopleViewModel);
 
-	        MessagingCenter.Subscribe<SelectPeoplePageViewModel>(this, SelectPeoplePageViewModel.ApplyMessage, page =>
+	        MessagingCenter.Subscribe<SelectPeoplePageViewModel>(this, SelectPeoplePageViewModel.ApplyMessage, selectPeoplePageViewModel =>
 	        {
                 // Нужно смержить выбранных до этого момента и выбранных после людей
                 var selectedBefore = new HashSet<Guid>(ViewModel.Contributions.Select(x => x.Model.Id));
-	            var selectedAfter = new Dictionary<Guid, Person>(page.GetSelected().ToDictionary(x => x.Id, v => v));
+	            var selectedAfter = new Dictionary<Guid, Person>(selectPeoplePageViewModel.GetSelected().ToDictionary(x => x.Id, v => v));
 
 	            var merged = ViewModel.Contributions.ToDictionary(x => x.Model.Id, v => v);
 
@@ -73,10 +73,25 @@ namespace CountingApp.Views
 	        await Navigation.PushAsync(selectPeoplePage);
 	    }
 
-	    private void ChangeFreeloaders_OnClicked(object sender, EventArgs e)
+	    private async void ChangeFreeloaders_OnClicked(object sender, EventArgs e)
 	    {
-	        
-	    }
+	        var selectPeopleViewModel = new SelectPeoplePageViewModel();
+#pragma warning disable 4014
+	        selectPeopleViewModel
+	            .LoadPeopleListAsync()
+	            .ContinueWith(task =>
+	                selectPeopleViewModel.SetSelected(ViewModel.Freeloaders.ToArray()));
+#pragma warning restore 4014
+	        var selectPeoplePage = new SelectPeoplePage(selectPeopleViewModel);
+
+	        MessagingCenter.Subscribe<SelectPeoplePageViewModel>(this, SelectPeoplePageViewModel.ApplyMessage, selectPeoplePageViewModel =>
+	        {
+	            ViewModel.Freeloaders = new ObservableCollection<Person>(selectPeoplePageViewModel.GetSelected());
+
+	            MessagingCenter.Unsubscribe<SelectPeoplePageViewModel>(this, SelectPeoplePageViewModel.ApplyMessage);
+	        });
+	        await Navigation.PushAsync(selectPeoplePage);
+        }
 
 	    private async void MenuItemDone_OnClicked(object sender, EventArgs e)
 	    {

@@ -1,4 +1,5 @@
 ﻿using System;
+using CountingApp.Data.Repositories.Transactions;
 using CountingApp.Models.Transactions;
 using CountingApp.ViewModels;
 using CountingApp.ViewModels.Transactions;
@@ -16,7 +17,7 @@ namespace CountingApp.Views
         {
             InitializeComponent();
 
-            BindingContext = _viewModel = new TransactionsViewModel();
+            BindingContext = _viewModel = new TransactionsViewModel(new TransactionsRepository());
         }
 
         private async void AddPurchase_OnClicked(object sender, EventArgs e)
@@ -25,17 +26,27 @@ namespace CountingApp.Views
 
             MessagingCenter.Subscribe<PurchasePage>(this, PurchasePage.DoneMessage, page =>
             {
-                _viewModel.Transactions.Add(page.ViewModel.GetModel());
+                var model = page.ViewModel.GetModel();
+                _viewModel.CreateTransaction(model);
 
                 MessagingCenter.Unsubscribe<PurchasePage>(this, PurchasePage.DoneMessage);
             });
         }
 
-        private void TransactionsListView_OnItemTapped(object sender, ItemTappedEventArgs e)
+        private async void TransactionsListView_OnItemTapped(object sender, ItemTappedEventArgs e)
         {
-            if (e.Item is Purchase purchase)
+            if (e.Item is TransactionListItemViewModel transactionListItemViewModel)
             {
-                Navigation.PushAsync(new PurchasePage(new PurchaseViewModel(purchase)));
+                // TODO: возможность работы с более чем одним типом транзакций
+                await Navigation.PushAsync(new PurchasePage(new PurchaseViewModel(transactionListItemViewModel.Model as Purchase)));
+
+                MessagingCenter.Subscribe<PurchasePage>(this, PurchasePage.DoneMessage, page =>
+                {
+                    var model = page.ViewModel.GetModel();
+                    _viewModel.ModifyTransaction(model);
+
+                    MessagingCenter.Unsubscribe<PurchasePage>(this, PurchasePage.DoneMessage);
+                });
             }
         }
     }

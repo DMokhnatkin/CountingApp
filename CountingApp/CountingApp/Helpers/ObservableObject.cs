@@ -50,5 +50,17 @@ namespace CountingApp.Helpers
 
 			changed.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
-	}
+
+	    /// <summary>
+	    /// Raises all property changed event.
+	    /// </summary>
+	    protected void OnAllPropertyChanged()
+	    {
+	        var changed = PropertyChanged;
+	        if (changed == null)
+	            return;
+
+	        changed.Invoke(this, new PropertyChangedEventArgs(string.Empty));
+	    }
+    }
 }
