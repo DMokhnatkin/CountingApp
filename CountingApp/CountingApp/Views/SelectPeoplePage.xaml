@@ -8,7 +8,7 @@
     <ListView ItemsSource="{Binding People}" IsRefreshing="{Binding IsBusy}" IsPullToRefreshEnabled="True" >
         <ListView.ItemTemplate>
             <DataTemplate>
-                <SwitchCell Text="{Binding DisplayName}" On="{Binding IsSelected}"/>
+                <SwitchCell Text="{Binding DisplayName}" On="{Binding IsSelected}" IsEnabled="{Binding IsActive}"/>
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>

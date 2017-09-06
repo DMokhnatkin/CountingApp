@@ -19,6 +19,8 @@ namespace CountingApp.ViewModels
 
         public const string ApplyMessage = "Apply";
 
+        #region Observable
+
         private ObservableCollection<SelectPersonViewModel> _people;
         public ObservableCollection<SelectPersonViewModel> People
         {
@@ -30,6 +32,8 @@ namespace CountingApp.ViewModels
             }
         }
 
+        #endregion
+
         public async Task LoadPeopleListAsync()
         {
             await OccupyIsBusy();
@@ -38,6 +42,9 @@ namespace CountingApp.ViewModels
             ReleaseIsBusy();
         }
 
+        /// <summary>
+        /// Установить выбранных людей
+        /// </summary>
         public void SetSelected(Person[] people)
         {
             var selectedDict =
@@ -52,6 +59,20 @@ namespace CountingApp.ViewModels
         public Person[] GetSelected()
         {
             return People.Where(x => x.IsSelected).Select(x => x.PersonModel).ToArray();
+        }
+
+        /// <summary>
+        /// Установить людей, которых нельзя выбрать
+        /// </summary>
+        public void SetUnActive(Guid[] peopleIds)
+        {
+            var peopleIdsSet = new HashSet<Guid>(peopleIds);
+
+            foreach (var personViewModel in People)
+            {
+                if (peopleIdsSet.Contains(personViewModel.PersonModel.Id))
+                    personViewModel.IsActive = false;
+            }
         }
 
         public class SelectPersonViewModel : BaseViewModel
@@ -75,6 +96,13 @@ namespace CountingApp.ViewModels
                     _isSelected = value;
                     OnPropertyChanged();
                 }
+            }
+
+            private bool _isActive = true;
+            public bool IsActive
+            {
+                get => _isActive;
+                set => SetProperty(ref _isActive, value);
             }
         }
     }

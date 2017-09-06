@@ -26,12 +26,12 @@ namespace CountingApp.Views
 
             MessagingCenter.Subscribe<PurchasePage>(this, PurchasePage.DoneMessage, async page =>
             {
+                MessagingCenter.Unsubscribe<PurchasePage>(this, PurchasePage.DoneMessage);
+
                 var model = page.ViewModel.GetModel();
                 IsBusy = true;
                 await _viewModel.CreateTransaction(model);
                 IsBusy = false;
-
-                MessagingCenter.Unsubscribe<PurchasePage>(this, PurchasePage.DoneMessage);
             });
         }
 
@@ -39,16 +39,16 @@ namespace CountingApp.Views
         {
             if (e.Item is TransactionListItemViewModel transactionListItemViewModel)
             {
+                MessagingCenter.Subscribe<PurchasePage>(this, PurchasePage.DoneMessage, async page =>
+                {
+                    MessagingCenter.Unsubscribe<PurchasePage>(this, PurchasePage.DoneMessage);
+
+                    var model = page.ViewModel.GetModel();
+                    await _viewModel.ModifyTransaction(model);
+                });
+
                 // TODO: возможность работы с более чем одним типом транзакций
                 await Navigation.PushAsync(new PurchasePage(new PurchaseViewModel(transactionListItemViewModel.Model as Purchase)));
-
-                MessagingCenter.Subscribe<PurchasePage>(this, PurchasePage.DoneMessage, page =>
-                {
-                    var model = page.ViewModel.GetModel();
-                    _viewModel.ModifyTransaction(model);
-
-                    MessagingCenter.Unsubscribe<PurchasePage>(this, PurchasePage.DoneMessage);
-                });
             }
         }
     }

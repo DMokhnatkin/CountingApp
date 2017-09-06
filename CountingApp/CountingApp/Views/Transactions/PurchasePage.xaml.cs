@@ -67,6 +67,8 @@ namespace CountingApp.Views
 	            }
 
 	            ViewModel.Contributions = new ObservableCollection<PurchaseViewModel.ContributionViewModel>(merged.Values.OrderBy(x => x.DisplayName));
+                // Не забываем если человек был назначен в спонсоры, его нужно убрать их нахлебников
+                ViewModel.Freeloaders = new ObservableCollection<Person>(ViewModel.Freeloaders.Where(x => !selectedAfter.ContainsKey(x.Id)));
 
                 MessagingCenter.Unsubscribe<SelectPeoplePageViewModel>(this, SelectPeoplePageViewModel.ApplyMessage);
 	        });
@@ -80,7 +82,10 @@ namespace CountingApp.Views
 	        selectPeopleViewModel
 	            .LoadPeopleListAsync()
 	            .ContinueWith(task =>
-	                selectPeopleViewModel.SetSelected(ViewModel.Freeloaders.ToArray()));
+	            {
+	                selectPeopleViewModel.SetSelected(ViewModel.Freeloaders.ToArray());
+	                selectPeopleViewModel.SetUnActive(ViewModel.Contributions.Select(x => x.Model.Id).ToArray());
+	            });
 #pragma warning restore 4014
 	        var selectPeoplePage = new SelectPeoplePage(selectPeopleViewModel);
 

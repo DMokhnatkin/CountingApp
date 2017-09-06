@@ -41,7 +41,6 @@ namespace CountingApp.ViewModels
             _transactionsRepository = transactionsRepository;
 
             Transactions = new ObservableCollection<TransactionListItemViewModel>();
-            _transactionsRepository = DependencyService.Get<ITransactionsRepository>();
 
 #pragma warning disable 4014
             LoadTransactions();
