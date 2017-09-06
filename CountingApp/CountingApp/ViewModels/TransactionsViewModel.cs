@@ -20,10 +20,10 @@ namespace CountingApp.ViewModels
             set => SetProperty(ref _transactions, value);
         }
 
-        public void CreateTransaction(Transaction transaction)
+        public async Task CreateTransaction(Transaction transaction)
         {
             Transactions.Add(new TransactionListItemViewModel(transaction));
-            _transactionsRepository.Add(transaction.Map());
+            await _transactionsRepository.Add(transaction.Map());
         }
 
         public async Task<bool> ModifyTransaction(Transaction transaction)
@@ -50,10 +50,10 @@ namespace CountingApp.ViewModels
 
         private async Task LoadTransactions()
         {
-            IsBusy = true;
+            await OccupyIsBusy();
             var transactions = await _transactionsRepository.GetAllAsync();
             Transactions = new ObservableCollection<TransactionListItemViewModel>(transactions.Select(x => new TransactionListItemViewModel(x.Unmap())));
-            IsBusy = false;
+            ReleaseIsBusy();
         }
     }
 }

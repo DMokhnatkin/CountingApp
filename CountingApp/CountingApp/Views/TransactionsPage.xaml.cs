@@ -24,10 +24,12 @@ namespace CountingApp.Views
         {
             await Navigation.PushAsync(new PurchasePage());
 
-            MessagingCenter.Subscribe<PurchasePage>(this, PurchasePage.DoneMessage, page =>
+            MessagingCenter.Subscribe<PurchasePage>(this, PurchasePage.DoneMessage, async page =>
             {
                 var model = page.ViewModel.GetModel();
-                _viewModel.CreateTransaction(model);
+                IsBusy = true;
+                await _viewModel.CreateTransaction(model);
+                IsBusy = false;
 
                 MessagingCenter.Unsubscribe<PurchasePage>(this, PurchasePage.DoneMessage);
             });

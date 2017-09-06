@@ -32,10 +32,10 @@ namespace CountingApp.ViewModels
 
         public async Task LoadPeopleListAsync()
         {
-            IsBusy = true;
+            await OccupyIsBusy();
             var people = await _peopleRepository.GetAvailablePeopleAsync() ?? new Person[0];
             People = new ObservableCollection<SelectPersonViewModel>(people.Select(x => new SelectPersonViewModel(x)));
-            IsBusy = false;
+            ReleaseIsBusy();
         }
 
         public void SetSelected(Person[] people)

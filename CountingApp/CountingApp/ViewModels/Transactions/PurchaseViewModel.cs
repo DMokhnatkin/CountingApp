@@ -36,19 +36,6 @@ namespace CountingApp.ViewModels.Transactions
             _transactionId = model.Id;
         }
 
-        public void Load()
-        {
-            new PeopleRepository().GetAvailablePeopleAsync().ContinueWith(task =>
-            {
-                Contributions.Add(new ContributionViewModel(task.Result[0]));
-
-                Freeloaders.Add(task.Result[1]);
-                Freeloaders.Add(task.Result[2]);
-                Freeloaders.Add(task.Result[3]);
-                Freeloaders.Add(task.Result[4]);
-            });
-        }
-
         private ObservableCollection<ContributionViewModel> _contributions;
         public ObservableCollection<ContributionViewModel> Contributions
         {
