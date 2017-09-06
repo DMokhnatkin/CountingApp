@@ -13,12 +13,35 @@ namespace CountingApp.ViewModels
     {
         private readonly ITransactionsRepository _transactionsRepository;
 
+        public TransactionsViewModel()
+        {
+            _transactionsRepository = DependencyService.Get<ITransactionsRepository>();
+
+            Transactions = new ObservableCollection<TransactionListItemViewModel>();
+
+#pragma warning disable 4014
+            LoadTransactions();
+#pragma warning restore 4014
+        }
+
+        private async Task LoadTransactions()
+        {
+            await OccupyIsBusy();
+            var transactions = await _transactionsRepository.GetAllAsync();
+            Transactions = new ObservableCollection<TransactionListItemViewModel>(transactions.Select(x => new TransactionListItemViewModel(x.Unmap())));
+            ReleaseIsBusy();
+        }
+
+        #region Observable
+
         private ObservableCollection<TransactionListItemViewModel> _transactions;
         public ObservableCollection<TransactionListItemViewModel> Transactions
         {
             get => _transactions;
             set => SetProperty(ref _transactions, value);
         }
+
+        #endregion
 
         public async Task CreateTransaction(Transaction transaction)
         {
@@ -34,25 +57,6 @@ namespace CountingApp.ViewModels
 
             vm.ChangeModel(transaction);
             return await _transactionsRepository.Modify(transaction.Map());
-        }
-
-        public TransactionsViewModel(ITransactionsRepository transactionsRepository)
-        {
-            _transactionsRepository = transactionsRepository;
-
-            Transactions = new ObservableCollection<TransactionListItemViewModel>();
-
-#pragma warning disable 4014
-            LoadTransactions();
-#pragma warning restore 4014
-        }
-
-        private async Task LoadTransactions()
-        {
-            await OccupyIsBusy();
-            var transactions = await _transactionsRepository.GetAllAsync();
-            Transactions = new ObservableCollection<TransactionListItemViewModel>(transactions.Select(x => new TransactionListItemViewModel(x.Unmap())));
-            ReleaseIsBusy();
         }
     }
 }

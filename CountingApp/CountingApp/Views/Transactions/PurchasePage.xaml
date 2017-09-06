@@ -18,7 +18,7 @@
         </StackLayout>
 
         <!-- Спонсоры список -->
-        <ListView x:Name="ContributorsListView" ItemsSource="{Binding Contributions}">
+        <ListView x:Name="ContributorsListView" ItemsSource="{Binding Contributions}" ItemTapped="ContributorsListView_OnItemTapped">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <EntryCell Label="{Binding DisplayName}" Text="{Binding Amount}" Keyboard="Numeric"/>
@@ -37,7 +37,7 @@
         </StackLayout>
 
         <!-- Нахлебники список -->
-        <ListView ItemsSource="{Binding Freeloaders}" SeparatorVisibility="None">
+        <ListView x:Name="FreeloadersListView" ItemsSource="{Binding Freeloaders}" SeparatorVisibility="None" ItemTapped="FreeloadersListView_OnItemTapped">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextCell Text="{Binding DisplayName}"></TextCell>

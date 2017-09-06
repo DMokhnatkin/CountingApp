@@ -8,6 +8,9 @@
                 <Setter Property="FontSize" Value="16"/>
                 <Setter Property="FontAttributes" Value="Bold"/>
             </Style>
+            <Style x:Key="Icon" TargetType="Image">
+                <Setter Property="Opacity" Value="0.6"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

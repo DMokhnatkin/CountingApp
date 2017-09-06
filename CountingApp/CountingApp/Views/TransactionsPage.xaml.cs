@@ -17,7 +17,7 @@ namespace CountingApp.Views
         {
             InitializeComponent();
 
-            BindingContext = _viewModel = new TransactionsViewModel(new TransactionsRepository());
+            BindingContext = _viewModel = new TransactionsViewModel();
         }
 
         private async void AddPurchase_OnClicked(object sender, EventArgs e)
@@ -46,6 +46,12 @@ namespace CountingApp.Views
                     var model = page.ViewModel.GetModel();
                     await _viewModel.ModifyTransaction(model);
                 });
+
+                // Нам не нужно выделение в ListView
+                if (sender is ListView listView)
+                {
+                    listView.SelectedItem = null;
+                }
 
                 // TODO: возможность работы с более чем одним типом транзакций
                 await Navigation.PushAsync(new PurchasePage(new PurchaseViewModel(transactionListItemViewModel.Model as Purchase)));

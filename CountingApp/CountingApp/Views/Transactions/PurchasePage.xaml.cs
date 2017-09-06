@@ -103,5 +103,25 @@ namespace CountingApp.Views
             MessagingCenter.Send(this, DoneMessage);
 	        await Navigation.PopAsync();
 	    }
+
+	    private void ContributorsListView_OnItemTapped(object sender, ItemTappedEventArgs e)
+	    {
+            // TODO: remove
+	        // Нам не нужно выделение в ListView
+	        if (sender is ListView listView)
+	        {
+	            listView.SelectedItem = null;
+	        }
+        }
+
+	    private void FreeloadersListView_OnItemTapped(object sender, ItemTappedEventArgs e)
+	    {
+	        // TODO: remove
+            // Нам не нужно выделение в ListView
+            if (sender is ListView listView)
+	        {
+	            listView.SelectedItem = null;
+	        }
+        }
 	}
 }

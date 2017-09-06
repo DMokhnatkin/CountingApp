@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using CountingApp.Views;
+using CountingApp.Data.Repositories.People;
+using CountingApp.Data.Repositories.Transactions;
 using Xamarin.Forms;
 
 namespace CountingApp
@@ -13,7 +14,9 @@ namespace CountingApp
 		{
 			InitializeComponent();
 
-			MainPage = new MainPage();
+		    RegisterDependencies();
+
+            MainPage = new MainPage();
 		}
 
 		protected override void OnStart ()
@@ -30,5 +33,11 @@ namespace CountingApp
 		{
 			// Handle when your app resumes
 		}
+
+	    private void RegisterDependencies()
+	    {
+	        DependencyService.Register<IPeopleRepository, PeopleRepository>();
+	        DependencyService.Register<ITransactionsRepository, TransactionsRepository>();
+        }
 	}
 }

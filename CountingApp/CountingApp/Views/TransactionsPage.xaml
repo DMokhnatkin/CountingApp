@@ -1,10 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:CountingApp.Controls;assembly=CountingApp.Android"
+             xmlns:helpers="clr-namespace:CountingApp.Helpers;assembly=CountingApp.Android"
              x:Class="CountingApp.Views.TransactionsPage"
              Title="Транзакции">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <helpers:InvertBoolConverter x:Key="InvertBoolConverter"></helpers:InvertBoolConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <StackLayout>
-        <ListView ItemsSource="{Binding Transactions}" HasUnevenRows="True" ItemTapped="TransactionsListView_OnItemTapped">
+        <ListView ItemsSource="{Binding Transactions}" IsRefreshing="{Binding IsBusy}" HasUnevenRows="True" ItemTapped="TransactionsListView_OnItemTapped">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -19,8 +26,10 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <StackLayout VerticalOptions="End" Orientation="Horizontal">
-            <Button Image="ic_shopping_cart_black_24dp.png" BackgroundColor="Transparent" Clicked="AddPurchase_OnClicked" BorderColor="Transparent"/>
-        </StackLayout>
+        <Frame Padding="0">
+            <StackLayout VerticalOptions="End" HorizontalOptions="Center" Orientation="Horizontal">
+                <controls:IconButton Image="ic_add_shopping_cart_black_36dp.png" Clicked="AddPurchase_OnClicked" Opacity="0.6" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertBoolConverter}}"></controls:IconButton>
+            </StackLayout>
+        </Frame>
     </StackLayout>
 </ContentPage>
