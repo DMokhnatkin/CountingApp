@@ -11,24 +11,36 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <StackLayout>
-        <ListView ItemsSource="{Binding Transactions}" IsRefreshing="{Binding IsBusy}" HasUnevenRows="True" ItemTapped="TransactionsListView_OnItemTapped">
+        <ListView ItemsSource="{Binding Transactions}" IsRefreshing="{Binding IsBusy}" HasUnevenRows="True" ItemTapped="ListView_OnItemTapped">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout>
-                            <StackLayout Orientation="Horizontal">
+                        <ViewCell.ContextActions>
+                            <MenuItem Clicked="OnEdit" CommandParameter="{Binding .}" Text="Edit" IsDestructive="True"/>
+                            <MenuItem Clicked="OnDelete" CommandParameter="{Binding .}" Text="Delete" IsDestructive="True"/>
+                        </ViewCell.ContextActions>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackLayout Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
                                 <Label Text="Покупка" Style="{StaticResource TitleStyle}"></Label>
                                 <Label Text="{Binding TotalAmountRub}"></Label>
                             </StackLayout>
-                            <Label Text="{Binding Timestamp}"></Label>
-                        </StackLayout>
+                            <Label Grid.Row="1" Grid.Column="0" Text="{Binding Timestamp}"></Label>
+                        </Grid>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
         <Frame Padding="0">
             <StackLayout VerticalOptions="End" HorizontalOptions="Center" Orientation="Horizontal">
-                <controls:IconButton Image="ic_add_shopping_cart_black_36dp.png" Clicked="AddPurchase_OnClicked" Opacity="0.6" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertBoolConverter}}"></controls:IconButton>
+                <controls:IconButton Image="ic_add_shopping_cart_black_36dp.png" Clicked="AddPurchase_OnClicked" Style="{StaticResource Icon}" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertBoolConverter}}"></controls:IconButton>
             </StackLayout>
         </Frame>
     </StackLayout>

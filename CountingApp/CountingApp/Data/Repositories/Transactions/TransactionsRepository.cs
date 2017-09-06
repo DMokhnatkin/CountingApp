@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CountingApp.Data.Dto;
-using Xamarin.Forms;
 
 namespace CountingApp.Data.Repositories.Transactions
 {
@@ -11,22 +11,22 @@ namespace CountingApp.Data.Repositories.Transactions
 
         public async Task<TransactionDto[]> GetAllAsync()
         {
-            await Task.Delay(200);
+            await Task.Delay(10);
             return _dtos.ToArray();
         }
 
         public async Task<bool> Add(TransactionDto dto)
         {
-            await Task.Delay(200);
+            await Task.Delay(10);
             _dtos.Add(dto);
             return true;
         }
 
-        private int FindById(TransactionDto dto)
+        private int FindById(Guid id)
         {
             for (int i = 0; i < _dtos.Count; i++)
             {
-                if (_dtos[i].Id == dto.Id)
+                if (_dtos[i].Id == id)
                     return i;
             }
             return -1;
@@ -34,11 +34,21 @@ namespace CountingApp.Data.Repositories.Transactions
 
         public async Task<bool> Modify(TransactionDto dto)
         {
-            await Task.Delay(200);
-            var index = FindById(dto);
+            await Task.Delay(10);
+            var index = FindById(dto.Id);
             if (index == -1)
                 return false;
             _dtos[index] = dto;
+            return true;
+        }
+
+        public async Task<bool> Remove(Guid id)
+        {
+            await Task.Delay(10);
+            var index = FindById(id);
+            if (index == -1)
+                return false;
+            _dtos.RemoveAt(index);
             return true;
         }
     }

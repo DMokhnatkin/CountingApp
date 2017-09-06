@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using CountingApp.Data.Dto;
 
 namespace CountingApp.Data.Repositories.Transactions
@@ -10,5 +11,7 @@ namespace CountingApp.Data.Repositories.Transactions
         Task<bool> Add(TransactionDto dto);
 
         Task<bool> Modify(TransactionDto dto);
+
+        Task<bool> Remove(Guid id);
     }
 }

@@ -35,9 +35,17 @@ namespace CountingApp.Views
             });
         }
 
-        private async void TransactionsListView_OnItemTapped(object sender, ItemTappedEventArgs e)
+        private async void OnDelete(object sender, EventArgs e)
         {
-            if (e.Item is TransactionListItemViewModel transactionListItemViewModel)
+            if (((MenuItem)sender).CommandParameter is TransactionListItemViewModel transactionListItemViewModel)
+            {
+                await _viewModel.RemoveTransaction(transactionListItemViewModel.Model.Id);
+            }
+        }
+
+        private async void OnEdit(object sender, EventArgs e)
+        {
+            if (((MenuItem)sender).CommandParameter is TransactionListItemViewModel transactionListItemViewModel)
             {
                 MessagingCenter.Subscribe<PurchasePage>(this, PurchasePage.DoneMessage, async page =>
                 {
@@ -47,14 +55,18 @@ namespace CountingApp.Views
                     await _viewModel.ModifyTransaction(model);
                 });
 
-                // Нам не нужно выделение в ListView
-                if (sender is ListView listView)
-                {
-                    listView.SelectedItem = null;
-                }
-
                 // TODO: возможность работы с более чем одним типом транзакций
                 await Navigation.PushAsync(new PurchasePage(new PurchaseViewModel(transactionListItemViewModel.Model as Purchase)));
+            }
+        }
+
+        private void ListView_OnItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            // TODO: remove
+            // Нам не нужно выделение в ListView
+            if (sender is ListView listView)
+            {
+                listView.SelectedItem = null;
             }
         }
     }

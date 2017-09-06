@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using CountingApp.Data.Mappers;
@@ -57,6 +58,23 @@ namespace CountingApp.ViewModels
 
             vm.ChangeModel(transaction);
             return await _transactionsRepository.Modify(transaction.Map());
+        }
+
+        public async Task<bool> RemoveTransaction(Guid id)
+        {
+            int i;
+            for (i = 0; i < Transactions.Count; i++)
+            {
+                if (Transactions[i].Model.Id == id)
+                    break;
+            }
+            if (i == Transactions.Count)
+                return false;
+            var res = await _transactionsRepository.Remove(id);
+            if (!res)
+                return false;
+            Transactions.RemoveAt(i);
+            return true;
         }
     }
 }
