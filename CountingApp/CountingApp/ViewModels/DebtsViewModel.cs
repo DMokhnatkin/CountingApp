@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using CountingApp.Data.Repositories.People;
@@ -26,7 +27,7 @@ namespace CountingApp.ViewModels
 
             await OccupyIsBusy();
             var debts = await _debtsCalculationService.CalculateDebts();
-            _debts = new ObservableCollection<PersonDebtsViewModel>();
+            Debts = new ObservableCollection<PersonDebtsViewModel>();
             foreach (var personDebts in debts.GroupBy(x => x.ContributorId))
             {
                 var person = await _peopleRepository.GetAsync(personDebts.Key);
