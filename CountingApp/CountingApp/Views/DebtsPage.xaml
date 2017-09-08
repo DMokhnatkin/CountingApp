@@ -8,7 +8,14 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Label Text="{Binding Who.DisplayName}"></Label>
+                        <!--<Label Text="{Binding Who.DisplayName}"/>-->
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{Binding Who.DisplayName}"/>
+                            <Label Text="->"/>
+                            <Label Text="{Binding Whom.DisplayName}"/>
+                            <Label Text="{Binding AmountRub}"/>
+                            <Label Text="руб."/>
+                        </StackLayout>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>

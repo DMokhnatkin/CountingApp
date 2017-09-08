@@ -27,42 +27,85 @@ namespace CountingApp.ViewModels
 
             await OccupyIsBusy();
             var debts = await _debtsCalculationService.CalculateDebts();
-            Debts = new ObservableCollection<PersonDebtsViewModel>();
-            foreach (var personDebts in debts.GroupBy(x => x.ContributorId))
+            Debts = new ObservableCollection<DebtViewModel>();
+            foreach (var debt in debts)
             {
-                var person = await _peopleRepository.GetAsync(personDebts.Key);
-                Debts.Add(new PersonDebtsViewModel
+                var who = await _peopleRepository.GetAsync(debt.FreeloaderId);
+                var whom = await _peopleRepository.GetAsync(debt.ContributorId);
+
+                Debts.Add(new DebtViewModel
                 {
-                    Who = person,
-                    Debts = new ObservableCollection<Debt>(personDebts)
+                    Who = who,
+                    Whom = whom,
+                    AmountRub = debt.AmountRub
                 });
             }
+            //Debts = new ObservableCollection<PersonDebtsViewModel>();
+            //foreach (var personDebts in debts.GroupBy(x => x.ContributorId))
+            //{
+            //    var person = await _peopleRepository.GetAsync(personDebts.Key);
+            //    Debts.Add(new PersonDebtsViewModel
+            //    {
+            //        Who = person,
+            //        Debts = new ObservableCollection<Debt>(personDebts)
+            //    });
+            //}
             ReleaseIsBusy();
         }
 
         #region Observable
 
-        private ObservableCollection<PersonDebtsViewModel> _debts;
-        public ObservableCollection<PersonDebtsViewModel> Debts
+        //private ObservableCollection<PersonDebtsViewModel> _debts;
+        //public ObservableCollection<PersonDebtsViewModel> Debts
+        //{
+        //    get=> _debts;
+        //    set => SetProperty(ref _debts, value);
+        //}
+
+        private ObservableCollection<DebtViewModel> _debts;
+        public ObservableCollection<DebtViewModel> Debts
         {
-            get=> _debts;
+            get => _debts;
             set => SetProperty(ref _debts, value);
         }
 
         #endregion
 
-        public class PersonDebtsViewModel : BaseViewModel
+        //public class PersonDebtsViewModel : BaseViewModel
+        //{
+        //    #region Observable
+
+        //    private Person _who;
+        //    public Person Who
+        //    {
+        //        get =>_who;
+        //        set =>SetProperty(ref _who, value); 
+        //    }
+
+        //    public ObservableCollection<Debt> Debts { get; set; }
+
+        //    #endregion
+        //}
+
+        public class DebtViewModel : BaseViewModel
         {
             #region Observable
 
             private Person _who;
             public Person Who
             {
-                get =>_who;
-                set =>SetProperty(ref _who, value); 
+                get => _who;
+                set => SetProperty(ref _who, value);
             }
 
-            public ObservableCollection<Debt> Debts { get; set; }
+            private Person _whom;
+            public Person Whom
+            {
+                get => _whom;
+                set => SetProperty(ref _whom, value);
+            }
+
+            public decimal AmountRub { get; set; }
 
             #endregion
         }

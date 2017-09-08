@@ -38,8 +38,8 @@ namespace CountingApp.Models.TransactionsAggregator
             foreach (var debt in _debts)
             {
                 result.Add(debt.Value > 0
-                    ? new Debt(debt.Key.Item1, debt.Key.Item2, debt.Value)
-                    : new Debt(debt.Key.Item2, debt.Key.Item1, debt.Value));
+                    ? new Debt(debt.Key.Item2, debt.Key.Item1, debt.Value)
+                    : new Debt(debt.Key.Item1, debt.Key.Item2, -debt.Value));
             }
             return result.ToArray();
         }
