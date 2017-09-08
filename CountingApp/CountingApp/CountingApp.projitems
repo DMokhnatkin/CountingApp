@@ -27,14 +27,25 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Models\Contribution.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Debt.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Person.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\TransactionsAggregator\Aggregator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\TransactionsAggregator\AggregatorState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\TransactionsAggregator\IAggregatable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\TransactionsAggregator\IAggregatorState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\TransactionsAggregator\IDebtsAggregatorState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Transactions\Purchase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Transactions\Transaction.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\DebtsCalculationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BaseViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\DebtsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SelectPeoplePageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\TransactionsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Transactions\PurchaseViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Transactions\TransactionListItemViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DebtsPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\MasterPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -79,6 +90,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\MasterPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\DebtsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

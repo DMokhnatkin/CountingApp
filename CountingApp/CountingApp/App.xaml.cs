@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using CountingApp.Data.Repositories.People;
 using CountingApp.Data.Repositories.Transactions;
+using CountingApp.Services;
 using Xamarin.Forms;
 
 namespace CountingApp
@@ -12,7 +13,7 @@ namespace CountingApp
 	{
 		public App ()
 		{
-			InitializeComponent();
+            InitializeComponent();
 
 		    RegisterDependencies();
 
@@ -38,6 +39,7 @@ namespace CountingApp
 	    {
 	        DependencyService.Register<IPeopleRepository, PeopleRepository>();
 	        DependencyService.Register<ITransactionsRepository, TransactionsRepository>();
+            DependencyService.Register<DebtsCalculationService>();
         }
 	}
 }

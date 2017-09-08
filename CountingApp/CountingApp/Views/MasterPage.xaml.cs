@@ -17,11 +17,16 @@ namespace CountingApp.Views
 		    var masterPageItems = new List<MasterPageItem>();
 		    masterPageItems.Add(new MasterPageItem
 		    {
-		        Title = "Transactions",
-		        IconSource = "transactions.png",
+		        Title = "Транзакции",
+		        IconSource = "ic_account_balance_wallet_black_24dp.png",
 		        TargetType = typeof(TransactionsPage)
 		    });
-
+            masterPageItems.Add(new MasterPageItem
+		    {
+		        Title = "Долги",
+                IconSource = "ic_compare_arrows_black_24dp",
+                TargetType = typeof(DebtsPage)
+		    });
 		    listView.ItemsSource = masterPageItems;
         }
 

@@ -14,7 +14,7 @@
                                 <ColumnDefinition Width="30"/>
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Image Source="{Binding IconSource}" />
+                            <Image Source="{Binding IconSource}" Style="{StaticResource Icon}" />
                             <Label Grid.Column="1" Text="{Binding Title}" VerticalOptions="FillAndExpand" />
                         </Grid>
                     </ViewCell>

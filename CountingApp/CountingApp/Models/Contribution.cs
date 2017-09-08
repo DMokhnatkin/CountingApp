@@ -6,6 +6,6 @@ namespace CountingApp.Models
     {
         public Guid PersonId { get; set; }
 
-        public decimal Amount { get; set; }
+        public decimal AmountRub { get; set; }
     }
 }

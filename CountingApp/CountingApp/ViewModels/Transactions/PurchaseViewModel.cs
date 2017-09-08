@@ -27,7 +27,7 @@ namespace CountingApp.ViewModels.Transactions
             var people = model.People?.ToDictionary(key => key.Id, val => val) ?? new Dictionary<Guid, Person>();
             foreach (var contribution in model.Contributions ?? new Contribution[0])
             {
-                contributions.Add(new ContributionViewModel(people[contribution.PersonId]) { Amount = contribution.Amount });
+                contributions.Add(new ContributionViewModel(people[contribution.PersonId]) { Amount = contribution.AmountRub });
             }
 
             Contributions = new ObservableCollection<ContributionViewModel>(contributions);
@@ -55,7 +55,7 @@ namespace CountingApp.ViewModels.Transactions
             return new Purchase
             {
                 Id = _transactionId,
-                Contributions = Contributions.Select(x => new Contribution{ Amount = x.Amount, PersonId = x.Model.Id }).ToArray(),
+                Contributions = Contributions.Select(x => new Contribution{ AmountRub = x.Amount, PersonId = x.Model.Id }).ToArray(),
                 People = Contributions.Select(x => x.Model).Concat(Freeloaders).Distinct().ToArray(),
                 Timestamp = DateTime.Now
             };
