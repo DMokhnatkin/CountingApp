@@ -11,14 +11,12 @@ namespace CountingApp.Data.Repositories.Transactions
 
         public async Task<TransactionDto[]> GetAllAsync()
         {
-            await Task.Delay(10);
-            return _dtos.ToArray();
+            return await Task.FromResult(_dtos.ToArray());
         }
 
         public async Task<bool> Add(TransactionDto dto)
         {
-            await Task.Delay(10);
-            _dtos.Add(dto);
+            await Task.Run(() => _dtos.Add(dto));
             return true;
         }
 
@@ -34,8 +32,7 @@ namespace CountingApp.Data.Repositories.Transactions
 
         public async Task<bool> Modify(TransactionDto dto)
         {
-            await Task.Delay(10);
-            var index = FindById(dto.Id);
+            var index = await Task.FromResult(FindById(dto.Id));
             if (index == -1)
                 return false;
             _dtos[index] = dto;
@@ -44,8 +41,7 @@ namespace CountingApp.Data.Repositories.Transactions
 
         public async Task<bool> Remove(Guid id)
         {
-            await Task.Delay(10);
-            var index = FindById(id);
+            var index = await Task.FromResult(FindById(id));
             if (index == -1)
                 return false;
             _dtos.RemoveAt(index);
