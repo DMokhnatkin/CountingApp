@@ -19,12 +19,14 @@ namespace CountingApp.Data.Repositories.People
 
         public async Task<Person> GetAsync(Guid id)
         {
-            return await Task.FromResult(_people[id]);
+            await Task.Delay(50);
+            return _people[id];
         }
 
         public async Task<Person[]> GetAvailablePeopleAsync()
         {
-            return await Task.FromResult(_people.Values.ToArray());
+            await Task.Delay(50);
+            return _people.Values.ToArray();
         }
     }
 }
