@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using CountingApp.Data.Repositories.People;
 using CountingApp.Models;
 using CountingApp.Models.Transactions;
 
@@ -32,9 +31,12 @@ namespace CountingApp.ViewModels.Transactions
 
             Contributions = new ObservableCollection<ContributionViewModel>(contributions);
             Freeloaders = new ObservableCollection<Person>(model.ExtractFreeloaders());
+            Description = model.Description;
 
             _transactionId = model.Id;
         }
+
+        #region Observable
 
         private ObservableCollection<ContributionViewModel> _contributions;
         public ObservableCollection<ContributionViewModel> Contributions
@@ -50,6 +52,15 @@ namespace CountingApp.ViewModels.Transactions
             set => SetProperty(ref _freeloaders, value);
         }
 
+        private string _description;
+        public string Description
+        {
+            get => _description;
+            set => SetProperty(ref _description, value);
+        }
+
+        #endregion
+
         public Purchase GetModel()
         {
             return new Purchase
@@ -57,6 +68,7 @@ namespace CountingApp.ViewModels.Transactions
                 Id = _transactionId,
                 Contributions = Contributions.Select(x => new Contribution{ AmountRub = x.Amount, PersonId = x.Model.Id }).ToArray(),
                 People = Contributions.Select(x => x.Model).Concat(Freeloaders).Distinct().ToArray(),
+                Description = Description,
                 Timestamp = DateTime.Now
             };
         }

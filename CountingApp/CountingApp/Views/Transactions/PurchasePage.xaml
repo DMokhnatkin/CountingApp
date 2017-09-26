@@ -6,7 +6,7 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Icon="done.png" Clicked="MenuItemDone_OnClicked"/>
     </ContentPage.ToolbarItems>
-    <StackLayout>
+    <StackLayout Margin="4">
         <!-- Спонсоры заголовок -->
         <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="5">
             <Label Text="Спонсоры" Style="{StaticResource TitleStyle}"/>
@@ -44,5 +44,11 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
+        <!-- Description title -->
+        <Label Text="Описание"></Label>
+        
+        <!-- Description -->
+        <Editor Text="{Binding Description}"></Editor>
     </StackLayout>
 </ContentPage>
