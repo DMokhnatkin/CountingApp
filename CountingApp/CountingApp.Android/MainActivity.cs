@@ -20,7 +20,8 @@ namespace CountingApp.Droid
 			base.OnCreate (bundle);
 
 			global::Xamarin.Forms.Forms.Init (this, bundle);
-			LoadApplication (new CountingApp.App ());
+		    global::Xamarin.Auth.Presenters.XamarinAndroid.AuthenticationConfiguration.Init(this, bundle);
+            LoadApplication (new CountingApp.App ());
 
 		    AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
 		    {

@@ -5,6 +5,7 @@ using System.Text;
 using CountingApp.Data.Repositories.People;
 using CountingApp.Data.Repositories.Transactions;
 using CountingApp.Services;
+using CountingApp.Views;
 using Xamarin.Forms;
 
 namespace CountingApp
@@ -17,7 +18,7 @@ namespace CountingApp
 
 		    RegisterDependencies();
 
-            MainPage = new MainPage();
+            MainPage = new LoginPage();
 		}
 
 		protected override void OnStart ()

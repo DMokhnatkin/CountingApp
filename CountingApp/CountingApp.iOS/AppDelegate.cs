@@ -23,7 +23,8 @@ namespace CountingApp.iOS
 		public override bool FinishedLaunching(UIApplication app, NSDictionary options)
 		{
 			global::Xamarin.Forms.Forms.Init ();
-			LoadApplication (new CountingApp.App ());
+		    global::Xamarin.Auth.Presenters.XamarinIOS.AuthenticationConfiguration.Init();
+            LoadApplication (new CountingApp.App ());
 
 			return base.FinishedLaunching (app, options);
 		}

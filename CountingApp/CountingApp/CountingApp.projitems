@@ -19,7 +19,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Data\Repositories\People\PeopleRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\Repositories\Transactions\ITransactionsRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\Repositories\Transactions\TransactionsRepository.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helpers\IconButtonRenderer .cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ImageResourceExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\InvertBoolConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ObservableObject.cs" />
@@ -36,6 +36,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\TransactionsAggregator\IDebtsAggregatorState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Transactions\Purchase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Transactions\Transaction.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\User.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\DebtsCalculationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BaseViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\DebtsViewModel.cs" />
@@ -44,6 +45,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Transactions\PurchaseViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Transactions\TransactionListItemViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\DebtsPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\LoginPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\MasterPage.xaml.cs">
@@ -95,6 +99,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\DebtsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\LoginPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
