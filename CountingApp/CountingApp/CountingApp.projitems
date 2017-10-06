@@ -19,6 +19,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Data\Repositories\People\PeopleRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\Repositories\Transactions\ITransactionsRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\Repositories\Transactions\TransactionsRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\AuthenticationState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ImageResourceExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\InvertBoolConverter.cs" />

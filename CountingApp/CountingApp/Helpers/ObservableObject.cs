@@ -14,7 +14,7 @@ namespace CountingApp.Helpers
 		/// Sets the property.
 		/// </summary>
 		/// <returns><c>true</c>, if property was set, <c>false</c> otherwise.</returns>
-		/// <param name="backingStore">Backing store.</param>
+		/// <param name="backingStore">Backing _store.</param>
 		/// <param name="value">Value.</param>
 		/// <param name="propertyName">Property name.</param>
 		/// <param name="onChanged">On changed.</param>

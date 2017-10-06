@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using CountingApp.Helpers;
 using CountingApp.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Xamarin.Auth;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -12,10 +14,16 @@ namespace CountingApp.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class LoginPage : ContentPage
 	{
-		public LoginPage ()
+	    Account _account;
+	    AccountStore _store;
+
+        public LoginPage ()
 		{
 			InitializeComponent ();
-		}
+
+		    _store = AccountStore.Create();
+		    _account = _store.FindAccountsForService(Constants.AppName).FirstOrDefault();
+        }
 
         private void Login_OnClicked(object sender, EventArgs e)
         {
@@ -35,7 +43,7 @@ namespace CountingApp.Views
             }
 
             var authenticator = new OAuth2Authenticator(
-                "1025525644396-nbq117quojdkrn7il5ccqjqoit48ii07.apps.googleusercontent.com",
+                clientId,
                 null,
                 "profile",
                 new Uri(Constants.AuthorizeUrl),
@@ -47,7 +55,7 @@ namespace CountingApp.Views
             authenticator.Completed += OnAuthCompleted;
             authenticator.Error += OnAuthError;
 
-            //AuthenticationState.Authenticator = authenticator;
+            AuthenticationState.Authenticator = authenticator;
 
             var presenter = new Xamarin.Auth.Presenters.OAuthLoginPresenter();
             presenter.Login(authenticator);
@@ -55,8 +63,7 @@ namespace CountingApp.Views
 
         async void OnAuthCompleted(object sender, AuthenticatorCompletedEventArgs e)
         {
-            var authenticator = sender as OAuth2Authenticator;
-            if (authenticator != null)
+            if (sender is OAuth2Authenticator authenticator)
             {
                 authenticator.Completed -= OnAuthCompleted;
                 authenticator.Error -= OnAuthError;
@@ -71,19 +78,19 @@ namespace CountingApp.Views
                 var response = await request.GetResponseAsync();
                 if (response != null)
                 {
-                    // Deserialize the data and store it in the account store
+                    // Deserialize the data and _store it in the _account _store
                     // The users email address will be used to identify data in SimpleDB
-                    string userJson = await response.GetResponseTextAsync();
-                    user = JsonConvert.DeserializeObject<User>(userJson);
+                    var userJObject = JObject.Parse(await response.GetResponseTextAsync());
+                    string userId = userJObject["id"].Value<string>();
+                    string displayName = userJObject["name"].Value<string>();
                 }
 
-                //if (account != null)
-                //{
-                //    store.Delete(account, Constants.AppName);
-                //}
+                if (_account != null)
+                {
+                    _store.Delete(_account, Constants.AppName);
+                }
 
-                //await store.SaveAsync(account = e.Account, Constants.AppName);
-                //await DisplayAlert("Email address", user.Email, "OK");
+                await _store.SaveAsync(_account = e.Account, Constants.AppName);
             }
         }
 
