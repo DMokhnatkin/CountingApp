@@ -42,7 +42,7 @@ namespace CountingApp.Views
                 new Uri(redirectUri ?? throw new InvalidOperationException()),
                 new Uri(Constants.AccessTokenUrl),
                 null,
-                false);
+                true);
 
             authenticator.Completed += OnAuthCompleted;
             authenticator.Error += OnAuthError;

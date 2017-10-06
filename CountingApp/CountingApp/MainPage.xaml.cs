@@ -12,7 +12,7 @@ namespace CountingApp
 
 	        masterPage.ListView.ItemSelected += OnItemSelected;
 
-	        if (Device.RuntimePlatform == Device.Windows)
+	        if (Device.RuntimePlatform == Device.WinPhone)
 	        {
 	            MasterBehavior = MasterBehavior.Popover;
 	        }
