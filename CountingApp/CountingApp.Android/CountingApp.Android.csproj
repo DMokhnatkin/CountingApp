@@ -49,8 +49,14 @@
     <AndroidLinkMode>SdkOnly</AndroidLinkMode>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.6.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.4.6.1\lib\netstandard1.1\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="FormsViewGroup, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xamarin.Forms.2.4.0.282\lib\MonoAndroid10\FormsViewGroup.dll</HintPath>
+    </Reference>
+    <Reference Include="IdentityModel, Version=2.12.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\IdentityModel.2.12.0\lib\netstandard1.4\IdentityModel.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mono.Android" />
@@ -304,6 +310,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_compare_arrows_black_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\CountingApp.Common\CountingApp.Common.csproj">
+      <Project>{65739B8B-4457-4C3E-AF0B-567B39124321}</Project>
+      <Name>CountingApp.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="..\CountingApp\CountingApp.projitems" Label="Shared" Condition="Exists('..\CountingApp\CountingApp.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Autofac;
 using CountingApp.Data.Repositories.People;
 using CountingApp.Data.Repositories.Transactions;
 using CountingApp.Services;
@@ -16,9 +17,11 @@ namespace CountingApp
 		{
             InitializeComponent();
 
+            ApplicationIocContainer.BuildIocContainer();
+
 		    RegisterDependencies();
 
-            MainPage = new LoginPage();
+            MainPage = new MainPage();
 		}
 
 		protected override void OnStart ()
@@ -38,6 +41,7 @@ namespace CountingApp
 
 	    private void RegisterDependencies()
 	    {
+            // TODO: move to ApplicationIocContainer
 	        DependencyService.Register<IPeopleRepository, PeopleRepository>();
 	        DependencyService.Register<ITransactionsRepository, TransactionsRepository>();
             DependencyService.Register<DebtsCalculationService>();

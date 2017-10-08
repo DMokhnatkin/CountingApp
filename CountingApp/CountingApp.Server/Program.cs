@@ -20,7 +20,7 @@ namespace CountingApp.Server
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-                .UseUrls("http://localhost:5051")
+                .UseUrls("http://192.168.1.141:5051")
                 .Build();
     }
 }

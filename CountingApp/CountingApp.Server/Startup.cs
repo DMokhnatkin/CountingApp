@@ -31,14 +31,14 @@ namespace CountingApp.Server
                 .AddJsonFormatters()
                 .AddApiExplorer(); // Used by swagger. Remove if release ?
 
-            services.AddAuthentication("Bearer")
-                .AddIdentityServerAuthentication(options =>
-                {
-                    options.Authority = "http://localhost:5050";
-                    options.RequireHttpsMetadata = false;
+            //services.AddAuthentication("Bearer")
+            //    .AddIdentityServerAuthentication(options =>
+            //    {
+            //        options.Authority = "http://localhost:5050";
+            //        options.RequireHttpsMetadata = false;
 
-                    options.ApiName = "api1";
-                });
+            //        options.ApiName = "api1";
+            //    });
 
 #if DEBUG
             services.AddSwaggerGen(c =>
@@ -62,7 +62,7 @@ namespace CountingApp.Server
             });
 #endif
 
-            app.UseAuthentication();
+            //app.UseAuthentication();
 
             if (env.IsDevelopment())
             {

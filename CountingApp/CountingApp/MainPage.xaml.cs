@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
+using Autofac;
+using CountingApp.Services;
 using CountingApp.Views;
+using Xamarin.Auth;
 using Xamarin.Forms;
 
 namespace CountingApp
@@ -16,6 +20,15 @@ namespace CountingApp
 	        {
 	            MasterBehavior = MasterBehavior.Popover;
 	        }
+	    }
+
+	    protected override async void OnAppearing()
+	    {
+	        var authService = ApplicationIocContainer.CurrentContainer.Resolve<IAuthService>();
+	        if (!authService.IsAuthenticated)
+                authService.Login();
+
+            base.OnAppearing();
 	    }
 
 	    void OnItemSelected(object sender, SelectedItemChangedEventArgs e)

@@ -12,6 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ApplicationIocContainer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\IconButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\Dto\TransactionDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\Mappers\TransactionMapper.cs" />
@@ -37,8 +38,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\TransactionsAggregator\IDebtsAggregatorState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Transactions\Purchase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Transactions\Transaction.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\User.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\AuthService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\DebtsCalculationService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\IAuthService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BaseViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\DebtsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SelectPeoplePageViewModel.cs" />

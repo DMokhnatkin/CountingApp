@@ -29,6 +29,8 @@ namespace CountingApp.IdentityServer
                     options.ClientId = "434483408261-55tc8n0cs4ff1fe21ea8df2o443v2iuc.apps.googleusercontent.com";
                     options.ClientSecret = "3gcoTrEDPPJ0ukn_aYYT6PWo";
                 });
+
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,6 +42,9 @@ namespace CountingApp.IdentityServer
             }
 
             app.UseIdentityServer();
+
+            app.UseStaticFiles();
+            app.UseMvcWithDefaultRoute();
         }
     }
 }

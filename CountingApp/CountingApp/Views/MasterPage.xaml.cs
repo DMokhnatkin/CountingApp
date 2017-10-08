@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using Autofac;
+using CountingApp.Services;
+using Xamarin.Auth;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,9 +14,13 @@ namespace CountingApp.Views
 	{
 	    public ListView ListView => listView;
 
+	    public string CurUserDisplayName { get; set; }
+
 	    public MasterPage ()
 		{
 			InitializeComponent ();
+
+            CurUserDisplayName = "test";
 
 		    var masterPageItems = new List<MasterPageItem>();
 		    masterPageItems.Add(new MasterPageItem

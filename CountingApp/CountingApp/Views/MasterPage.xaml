@@ -5,6 +5,7 @@
              Padding="0,40,0,0"
              Title="Test 3">
     <StackLayout>
+        <Label Text="{Binding CurUserDisplayName}"></Label>
         <ListView x:Name="listView" SeparatorVisibility="None">
             <ListView.ItemTemplate>
                 <DataTemplate>

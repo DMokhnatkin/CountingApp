@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+using Autofac;
 using CountingApp.Data.Mappers;
 using CountingApp.Data.Repositories.Transactions;
 using CountingApp.Models;
+using CountingApp.Services;
 using CountingApp.ViewModels.Transactions;
+using IdentityModel.Client;
+using Xamarin.Auth;
 using Xamarin.Forms;
 
 namespace CountingApp.ViewModels
@@ -28,6 +34,7 @@ namespace CountingApp.ViewModels
         private async Task LoadTransactions()
         {
             await OccupyIsBusy();
+
             var transactions = await _transactionsRepository.GetAllAsync();
             Transactions = new ObservableCollection<TransactionListItemViewModel>(transactions.Select(x => new TransactionListItemViewModel(x.Unmap())));
             ReleaseIsBusy();
