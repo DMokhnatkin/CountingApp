@@ -22,6 +22,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Data\Repositories\Transactions\TransactionsRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\AuthenticationState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\Constants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ConstantsSecret.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ImageResourceExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\InvertBoolConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ObservableObject.cs" />

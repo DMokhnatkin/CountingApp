@@ -11,8 +11,8 @@ namespace CountingApp.Droid
     [IntentFilter(
         new[] { Intent.ActionView },
         Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
-        DataSchemes = new[] { Constants.AndroidReversedClientId },
-        DataPath = "/oauth2redirect")]
+        DataSchemes = new[] { Constants.IdentityServerHostReversed },
+        DataPath = ":/oauth2redirect")]
     public class AuthInterceptorActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)

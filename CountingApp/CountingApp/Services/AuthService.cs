@@ -30,6 +30,7 @@ namespace CountingApp.Services
         public void Login()
         {
             string clientId = null;
+            string clientSecret = null;
             string redirectUri = null;
 
             switch (Device.RuntimePlatform)
@@ -39,15 +40,16 @@ namespace CountingApp.Services
                     break;
 
                 case Device.Android:
-                    clientId = Constants.AndroidClientId;
+                    clientId = ConstantsSecret.AndroidClientId;
+                    clientSecret = ConstantsSecret.AndroidClientSecret;
                     redirectUri = Constants.AndroidRedirectUrl;
                     break;
             }
 
             CurAuthenticator = new OAuth2Authenticator(
                 clientId,
-                null,
-                "profile",
+                clientSecret,
+                "api1",
                 new Uri(Constants.AuthorizeUrl),
                 new Uri(redirectUri ?? throw new InvalidOperationException()),
                 new Uri(Constants.AccessTokenUrl),
@@ -56,6 +58,8 @@ namespace CountingApp.Services
 
             CurAuthenticator.Completed += OnAuthCompleted;
             CurAuthenticator.Error += OnAuthError;
+
+            AuthenticationState.Authenticator = CurAuthenticator;
 
             var presenter = new Xamarin.Auth.Presenters.OAuthLoginPresenter();
             presenter.Login(CurAuthenticator);

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Security.Claims;
+using CountingApp.IdentityServer.Models.Config;
 using IdentityServer4;
 using IdentityServer4.Models;
 using IdentityServer4.Test;
@@ -14,7 +15,7 @@ namespace CountingApp.IdentityServer
             return new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile(),
+                new IdentityResources.Profile()
             };
         }
 
@@ -27,37 +28,30 @@ namespace CountingApp.IdentityServer
         }
 
         // clients want to access resources (aka scopes)
-        public static IEnumerable<Client> GetClients()
+        public static IEnumerable<Client> GetClients(ClientOptions options)
         {
             // client credentials client
             return new List<Client>
             {
                 new Client
                 {
-                    ClientId = "client",
-                    AllowedGrantTypes = GrantTypes.ClientCredentials,
-
+                    ClientId = options.AndroidClientId,
+                    ClientName = "Android",
+                    AllowedGrantTypes = GrantTypes.Code,
                     ClientSecrets =
                     {
-                        new Secret("secret".Sha256())
+                        new Secret(options.AndroidClientSecret.Sha256())
                     },
-                    AllowedScopes = { "api1" }
-                },
+                    RequireConsent = false,
 
-                // OpenID Connect implicit flow client (MVC)
-                new Client
-                {
-                    ClientId = "mvc",
-                    ClientName = "MVC Client",
-                    AllowedGrantTypes = GrantTypes.Implicit,
-
-                    RedirectUris = { "http://localhost:5002/signin-oidc" },
-                    PostLogoutRedirectUris = { "http://localhost:5002/signout-callback-oidc" },
+                    RedirectUris = { "org.mokhnatkin.pc:/oauth2redirect" },
 
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.OfflineAccess,
+                        "api1"
                     }
                 }
             };
