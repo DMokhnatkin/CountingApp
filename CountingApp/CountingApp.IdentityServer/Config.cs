@@ -15,7 +15,7 @@ namespace CountingApp.IdentityServer
             return new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile()
+                new IdentityResources.Profile(),
             };
         }
 
@@ -23,7 +23,10 @@ namespace CountingApp.IdentityServer
         {
             return new List<ApiResource>
             {
-                new ApiResource("api1", "My API")
+                new ApiResource("CoreApi", "Main API")
+                {
+                    UserClaims = { ClaimTypes.Email }
+                }
             };
         }
 
@@ -51,7 +54,7 @@ namespace CountingApp.IdentityServer
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.OfflineAccess,
-                        "api1"
+                        "CoreApi"
                     }
                 }
             };

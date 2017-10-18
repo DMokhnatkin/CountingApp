@@ -176,9 +176,9 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\CountingApp.Common\CountingApp.Common.csproj">
-      <Project>{65739b8b-4457-4c3e-af0b-567b39124321}</Project>
-      <Name>CountingApp.Common</Name>
+    <ProjectReference Include="..\CountingApp.Core\CountingApp.Core.csproj">
+      <Project>{29b121fb-eaee-4a33-b9aa-9054a2fde1d4}</Project>
+      <Name>CountingApp.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="..\CountingApp\CountingApp.projitems" Label="Shared" Condition="Exists('..\CountingApp\CountingApp.projitems')" />

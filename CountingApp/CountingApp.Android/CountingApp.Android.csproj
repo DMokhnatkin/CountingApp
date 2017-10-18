@@ -313,9 +313,9 @@
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_compare_arrows_black_24dp.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\CountingApp.Common\CountingApp.Common.csproj">
-      <Project>{65739B8B-4457-4C3E-AF0B-567B39124321}</Project>
-      <Name>CountingApp.Common</Name>
+    <ProjectReference Include="..\CountingApp.Core\CountingApp.Core.csproj">
+      <Project>{29B121FB-EAEE-4A33-B9AA-9054A2FDE1D4}</Project>
+      <Name>CountingApp.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="..\CountingApp\CountingApp.projitems" Label="Shared" Condition="Exists('..\CountingApp\CountingApp.projitems')" />

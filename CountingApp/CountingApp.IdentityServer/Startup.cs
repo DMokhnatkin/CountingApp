@@ -1,6 +1,8 @@
-﻿using CountingApp.IdentityServer.Models.Config;
+﻿using System.Collections.Generic;
+using CountingApp.IdentityServer.Models.Config;
 using IdentityServer4;
 using IdentityServer4.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -37,6 +39,8 @@ namespace CountingApp.IdentityServer
 
                     options.ClientId = externalProvidersOptions.GoogleClientId;
                     options.ClientSecret = externalProvidersOptions.GoogleClientSecret;
+
+                    options.Scope.Add("profile");
                 });
 
             services.AddMvc();

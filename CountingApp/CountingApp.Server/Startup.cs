@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using CountingApp.Core.Config;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace CountingApp.Server
@@ -31,14 +26,14 @@ namespace CountingApp.Server
                 .AddJsonFormatters()
                 .AddApiExplorer(); // Used by swagger. Remove if release ?
 
-            //services.AddAuthentication("Bearer")
-            //    .AddIdentityServerAuthentication(options =>
-            //    {
-            //        options.Authority = "http://localhost:5050";
-            //        options.RequireHttpsMetadata = false;
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddIdentityServerAuthentication(options =>
+                {
+                    options.Authority = Uris.IdentityServerUri;
+                    options.RequireHttpsMetadata = false;
 
-            //        options.ApiName = "api1";
-            //    });
+                    options.ApiName = "CoreApi";
+                });
 
 #if DEBUG
             services.AddSwaggerGen(c =>
@@ -51,6 +46,7 @@ namespace CountingApp.Server
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseAuthentication();
 #if DEBUG
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();

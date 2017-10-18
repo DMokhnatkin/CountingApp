@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\CountingApp.Common\CountingApp.Common.csproj" />
+    <ProjectReference Include="..\CountingApp.Core\CountingApp.Core.csproj" />
   </ItemGroup>
 
 </Project>

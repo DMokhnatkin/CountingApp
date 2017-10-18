@@ -14,7 +14,12 @@ namespace CountingApp.Droid
 	{
 		protected override void OnCreate (Bundle bundle)
 		{
-			TabLayoutResource = Resource.Layout.Tabbar;
+		    AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
+		    {
+
+		    };
+
+            TabLayoutResource = Resource.Layout.Tabbar;
 			ToolbarResource = Resource.Layout.Toolbar; 
 
 			base.OnCreate (bundle);
@@ -22,11 +27,6 @@ namespace CountingApp.Droid
 			global::Xamarin.Forms.Forms.Init (this, bundle);
 		    global::Xamarin.Auth.Presenters.XamarinAndroid.AuthenticationConfiguration.Init(this, bundle);
             LoadApplication (new CountingApp.App ());
-
-		    AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
-		    {
-
-		    };
 		}
 	}
 }

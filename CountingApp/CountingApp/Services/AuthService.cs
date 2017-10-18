@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using Autofac;
 using CountingApp.Helpers;
+using IdentityModel.Client;
 using Xamarin.Auth;
 using Xamarin.Forms;
 
@@ -49,7 +51,7 @@ namespace CountingApp.Services
             CurAuthenticator = new OAuth2Authenticator(
                 clientId,
                 clientSecret,
-                "api1",
+                "CoreApi",
                 new Uri(Constants.AuthorizeUrl),
                 new Uri(redirectUri ?? throw new InvalidOperationException()),
                 new Uri(Constants.AccessTokenUrl),
@@ -82,18 +84,11 @@ namespace CountingApp.Services
 
                 await _accountStore.SaveAsync(_account = e.Account, Constants.AppName);
 
-                // If the user is authenticated, request their basic user data from Google
-                // UserInfoUrl = https://www.googleapis.com/oauth2/v2/userinfo
-                //var request = new OAuth2Request("GET", new Uri(Constants.UserInfoUrl), null, e.Account);
-                //var response = await request.GetResponseAsync();
-                //if (response != null)
-                //{
-                //    // Deserialize the data and _accountStore it in the _account _accountStore
-                //    // The users email address will be used to identify data in SimpleDB
-                //    var userJObject = JObject.Parse(await response.GetResponseTextAsync());
-                //    string userId = userJObject["id"].Value<string>();
-                //    string displayName = userJObject["name"].Value<string>();
-                //}
+                //var client = new HttpClient();
+                //client.SetBearerToken(e.Account.Properties["access_token"]);
+                //client.BaseAddress = new Uri("http://pc.mokhnatkin.org:5051/");
+                //var res = await client.GetAsync(new Uri("/api/values/"));
+                //{ }
             }
         }
 

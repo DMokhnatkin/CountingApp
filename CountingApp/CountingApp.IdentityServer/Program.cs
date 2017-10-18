@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+using CountingApp.Core.Config;
 
 namespace CountingApp.IdentityServer
 {
@@ -20,7 +14,7 @@ namespace CountingApp.IdentityServer
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-                .UseUrls("http://192.168.1.141:5050")
+                .UseUrls(Uris.IdentityServerUri)
                 .Build();
     }
 }
