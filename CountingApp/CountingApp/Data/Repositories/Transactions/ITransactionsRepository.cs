@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using CountingApp.Data.Dto;
+using CountingApp.Core.Dto;
 
 namespace CountingApp.Data.Repositories.Transactions
 {

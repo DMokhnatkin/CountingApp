@@ -9,9 +9,13 @@ namespace CountingApp.Server.DbModels
         {
             var t = new TransactionDbModel
             {
-                UserId = "b70166adce518a511db4d44fb0bb158644032a52ba7a129647a5ecdc4b71f496",
-                SerializedData = "test",
-                TransactionId = new Guid("28150EB5-803D-4611-B397-AC89220A75BB")
+                UserId = "9593a5a0-0058-4a0b-90db-5cb14d9e49d3",
+                TransactionData =
+                "{ 'Contributions' : { '9593a5a0-0058-4a0b-90db-5cb14d9e49d3' : 100, '9593a5a0-0058-4a0b-90db-5cb14d9e49d4' : 200 }, 'PersonList' : ['9593a5a0-0058-4a0b-90db-5cb14d9e49d3', '9593a5a0-0058-4a0b-90db-5cb14d9e49d4'] }",
+                TransactionId = new Guid("28150EB5-803D-4611-B397-AC89220A75BB"),
+                Timestamp = new DateTime(2016, 1, 1),
+                TotalAmount = 560,
+                TransactionType = "purchase",
             };
             if (!context.TransactionDbModels.Any(x => x.TransactionId == t.TransactionId))
             {

@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Autofac;
 using CountingApp.Core.Config;
-using CountingApp.Data.Dto;
+using CountingApp.Core.Dto;
 using CountingApp.Models;
 using CountingApp.Models.Transactions;
 using CountingApp.Services;
@@ -27,9 +27,8 @@ namespace CountingApp.Data.Repositories.Transactions
         {
             var res = await _client.GetAsync(_baseAddress);
             res.EnsureSuccessStatusCode();
-            var r = await res.Content.ReadAsStringAsync();
-            return new TransactionDto[0];
-            //throw new NotImplementedException();
+            var resJson = await res.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<TransactionDto[]>(resJson);
         }
 
         public Task<bool> Add(TransactionDto dto)

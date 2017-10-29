@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CountingApp.Data.Dto;
+using CountingApp.Core.Dto;
 
 namespace CountingApp.Data.Repositories.Transactions
 {

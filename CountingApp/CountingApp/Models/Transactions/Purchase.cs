@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CountingApp.Models.TransactionsAggregator;
 
@@ -15,6 +16,8 @@ namespace CountingApp.Models.Transactions
         /// Все люди, которые участвовали в покупке
         /// </summary>
         public Person[] People { get; set; }
+
+        public string[] PersonList { get; set; }
 
         public override decimal TotalAmountRub => Contributions.Select(x => x.AmountRub).Sum();
 

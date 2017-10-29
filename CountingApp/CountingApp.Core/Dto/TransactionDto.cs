@@ -1,14 +1,11 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
-namespace CountingApp.Server.DbModels
+namespace CountingApp.Core.Dto
 {
-    public class TransactionDbModel
+    public class TransactionDto
     {
-        [Key]
-        public Guid TransactionId { get; set; }
+        public Guid Id { get; set; }
 
-        [Required]
         public string UserId { get; set; }
 
         public string TransactionType { get; set; }

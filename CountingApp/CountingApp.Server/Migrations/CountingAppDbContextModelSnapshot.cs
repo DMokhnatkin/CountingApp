@@ -25,8 +25,13 @@ namespace CountingApp.Server.Migrations
                     b.Property<Guid>("TransactionId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("SerializedData")
-                        .IsRequired();
+                    b.Property<DateTime>("Timestamp");
+
+                    b.Property<decimal>("TotalAmount");
+
+                    b.Property<string>("TransactionData");
+
+                    b.Property<string>("TransactionType");
 
                     b.Property<string>("UserId")
                         .IsRequired();

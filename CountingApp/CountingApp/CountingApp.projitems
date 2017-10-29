@@ -14,7 +14,6 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ApplicationIocContainer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\IconButton.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Data\Dto\TransactionDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\Mappers\TransactionMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\Repositories\People\IPeopleRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\Repositories\People\PeopleRepository.cs" />

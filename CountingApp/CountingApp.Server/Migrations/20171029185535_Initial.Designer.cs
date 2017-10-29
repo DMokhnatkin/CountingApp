@@ -11,8 +11,8 @@ using System;
 namespace CountingApp.Server.Migrations
 {
     [DbContext(typeof(CountingAppDbContext))]
-    [Migration("20171028184458_Init")]
-    partial class Init
+    [Migration("20171029185535_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,8 +26,13 @@ namespace CountingApp.Server.Migrations
                     b.Property<Guid>("TransactionId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("SerializedData")
-                        .IsRequired();
+                    b.Property<DateTime>("Timestamp");
+
+                    b.Property<decimal>("TotalAmount");
+
+                    b.Property<string>("TransactionData");
+
+                    b.Property<string>("TransactionType");
 
                     b.Property<string>("UserId")
                         .IsRequired();
