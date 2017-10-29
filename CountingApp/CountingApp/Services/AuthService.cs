@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net.Http;
 using Autofac;
 using CountingApp.Helpers;
-using IdentityModel.Client;
 using Xamarin.Auth;
 using Xamarin.Forms;
 
@@ -14,6 +13,7 @@ namespace CountingApp.Services
     {
         private Account _account;
         private readonly AccountStore _accountStore;
+        private HttpClient _curClient;
 
         public AuthService()
         {
@@ -28,6 +28,15 @@ namespace CountingApp.Services
         public WebAuthenticator CurAuthenticator { get; private set; }
 
         public Account CurAccount => _account;
+
+        public HttpClient GetClient()
+        {
+            if (_curClient != null)
+                return _curClient;
+            _curClient = new HttpClient();
+            _curClient.SetBearerToken(CurAccount.Properties["access_token"]);
+            return _curClient;
+        }
 
         public void Login()
         {

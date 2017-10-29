@@ -1,8 +1,9 @@
-﻿using Xamarin.Auth;
+﻿using System.Net.Http;
+using Xamarin.Auth;
 
 namespace CountingApp.Services
 {
-    interface IAuthService
+    public interface IAuthService
     {
         Account CurAccount { get; }
 
@@ -13,5 +14,7 @@ namespace CountingApp.Services
         WebAuthenticator CurAuthenticator { get; }
 
         void Login();
+
+        HttpClient GetClient();
     }
 }

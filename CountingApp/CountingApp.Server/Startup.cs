@@ -1,8 +1,10 @@
 ﻿using CountingApp.Core.Config;
+using CountingApp.Server.DbModels;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
@@ -21,6 +23,8 @@ namespace CountingApp.Server
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<CountingAppDbContext>(options => options.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=CountingApp;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"));
+
             services.AddMvcCore()
                 .AddAuthorization()
                 .AddJsonFormatters()
@@ -46,6 +50,11 @@ namespace CountingApp.Server
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                new CountingAppDbContextSeed().SeedAsync(serviceScope.ServiceProvider.GetService<CountingAppDbContext>());
+            }
+
             app.UseAuthentication();
 #if DEBUG
             // Enable middleware to serve generated Swagger as a JSON endpoint.
