@@ -31,17 +31,17 @@ namespace CountingApp.Data.Repositories.Transactions
             return JsonConvert.DeserializeObject<TransactionDto[]>(resJson);
         }
 
-        public Task<bool> Add(TransactionDto dto)
+        public Task<bool> AddAsync(TransactionDto dto)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> Modify(TransactionDto dto)
+        public Task<bool> ModifyAsync(TransactionDto dto)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> Remove(Guid id)
+        public Task<bool> RemoveAsync(Guid id)
         {
             throw new NotImplementedException();
         }

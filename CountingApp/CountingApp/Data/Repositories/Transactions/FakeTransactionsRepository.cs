@@ -15,7 +15,7 @@ namespace CountingApp.Data.Repositories.Transactions
             return _dtos.ToArray();
         }
 
-        public async Task<bool> Add(TransactionDto dto)
+        public async Task<bool> AddAsync(TransactionDto dto)
         {
             await Task.Delay(10);
             _dtos.Add(dto);
@@ -32,7 +32,7 @@ namespace CountingApp.Data.Repositories.Transactions
             return -1;
         }
 
-        public async Task<bool> Modify(TransactionDto dto)
+        public async Task<bool> ModifyAsync(TransactionDto dto)
         {
             await Task.Delay(10);
             var index = FindById(dto.Id);
@@ -42,7 +42,7 @@ namespace CountingApp.Data.Repositories.Transactions
             return true;
         }
 
-        public async Task<bool> Remove(Guid id)
+        public async Task<bool> RemoveAsync(Guid id)
         {
             await Task.Delay(10);
             var index = FindById(id);

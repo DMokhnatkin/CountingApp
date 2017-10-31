@@ -8,10 +8,10 @@ namespace CountingApp.Data.Repositories.Transactions
     {
         Task<TransactionDto[]> GetAllAsync();
 
-        Task<bool> Add(TransactionDto dto);
+        Task<bool> AddAsync(TransactionDto dto);
 
-        Task<bool> Modify(TransactionDto dto);
+        Task<bool> ModifyAsync(TransactionDto dto);
 
-        Task<bool> Remove(Guid id);
+        Task<bool> RemoveAsync(Guid id);
     }
 }

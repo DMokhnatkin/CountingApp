@@ -54,7 +54,7 @@ namespace CountingApp.ViewModels
         public async Task CreateTransaction(Transaction transaction)
         {
             Transactions.Add(new TransactionListItemViewModel(transaction));
-            await _transactionsRepository.Add(transaction.Map());
+            await _transactionsRepository.AddAsync(transaction.Map());
         }
 
         public async Task<bool> ModifyTransaction(Transaction transaction)
@@ -64,7 +64,7 @@ namespace CountingApp.ViewModels
                 return false;
 
             vm.ChangeModel(transaction);
-            return await _transactionsRepository.Modify(transaction.Map());
+            return await _transactionsRepository.ModifyAsync(transaction.Map());
         }
 
         public async Task<bool> RemoveTransaction(Guid id)
@@ -77,7 +77,7 @@ namespace CountingApp.ViewModels
             }
             if (i == Transactions.Count)
                 return false;
-            var res = await _transactionsRepository.Remove(id);
+            var res = await _transactionsRepository.RemoveAsync(id);
             if (!res)
                 return false;
             Transactions.RemoveAt(i);

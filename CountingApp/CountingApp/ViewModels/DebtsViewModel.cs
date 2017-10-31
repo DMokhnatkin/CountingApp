@@ -42,7 +42,7 @@ namespace CountingApp.ViewModels
             //foreach (var personDebts in debts.GroupBy(x => x.ContributorId))
             //{
             //    var person = await _peopleRepository.GetAsync(personDebts.Key);
-            //    Debts.Add(new PersonDebtsViewModel
+            //    Debts.AddAsync(new PersonDebtsViewModel
             //    {
             //        Who = person,
             //        Debts = new ObservableCollection<Debt>(personDebts)
