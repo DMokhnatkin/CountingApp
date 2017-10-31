@@ -5,7 +5,8 @@
              xmlns:helpers="clr-namespace:CountingApp.Helpers;assembly=CountingApp.Android"
              xmlns:controls1="clr-namespace:CountingApp.Controls;assembly=CountingApp.iOS"
              x:Class="CountingApp.Views.TransactionsPage"
-             Title="Транзакции">
+             Title="Транзакции"
+             Appearing="TransactionsPage_OnAppearing">
     <ContentPage.Resources>
         <ResourceDictionary>
             <helpers:InvertBoolConverter x:Key="InvertBoolConverter"></helpers:InvertBoolConverter>

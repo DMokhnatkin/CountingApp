@@ -23,7 +23,7 @@ namespace CountingApp.ViewModels
             if (_debtsCalculationService == null || _peopleRepository == null)
                 return;
 
-            await OccupyIsBusy();
+            OccupyIsBusy();
             var debts = await _debtsCalculationService.CalculateDebts();
             Debts = new ObservableCollection<DebtViewModel>();
             foreach (var debt in debts)

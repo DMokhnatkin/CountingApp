@@ -31,19 +31,22 @@ namespace CountingApp.Data.Repositories.Transactions
             return JsonConvert.DeserializeObject<TransactionDto[]>(resJson);
         }
 
-        public Task<bool> AddAsync(TransactionDto dto)
+        public async Task AddAsync(TransactionDto dto)
         {
-            throw new NotImplementedException();
+            var res = await _client.PostAsync(_baseAddress, new StringContent(JsonConvert.SerializeObject(dto)));
+            res.EnsureSuccessStatusCode();
         }
 
-        public Task<bool> ModifyAsync(TransactionDto dto)
+        public async Task ModifyAsync(TransactionDto dto)
         {
-            throw new NotImplementedException();
+            var res = await _client.PutAsync(_baseAddress, new StringContent(JsonConvert.SerializeObject(dto)));
+            res.EnsureSuccessStatusCode();
         }
 
-        public Task<bool> RemoveAsync(Guid id)
+        public async Task RemoveAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var res = await _client.DeleteAsync(_baseAddress + $"/{id.ToString()}");
+            res.EnsureSuccessStatusCode();
         }
     }
 }

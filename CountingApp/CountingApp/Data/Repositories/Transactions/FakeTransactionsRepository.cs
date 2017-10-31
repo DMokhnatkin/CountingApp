@@ -15,11 +15,10 @@ namespace CountingApp.Data.Repositories.Transactions
             return _dtos.ToArray();
         }
 
-        public async Task<bool> AddAsync(TransactionDto dto)
+        public async Task AddAsync(TransactionDto dto)
         {
             await Task.Delay(10);
             _dtos.Add(dto);
-            return true;
         }
 
         private int FindById(Guid id)
@@ -32,24 +31,22 @@ namespace CountingApp.Data.Repositories.Transactions
             return -1;
         }
 
-        public async Task<bool> ModifyAsync(TransactionDto dto)
+        public async Task ModifyAsync(TransactionDto dto)
         {
             await Task.Delay(10);
             var index = FindById(dto.Id);
             if (index == -1)
-                return false;
+                throw new IndexOutOfRangeException();
             _dtos[index] = dto;
-            return true;
         }
 
-        public async Task<bool> RemoveAsync(Guid id)
+        public async Task RemoveAsync(Guid id)
         {
             await Task.Delay(10);
             var index = FindById(id);
             if (index == -1)
-                return false;
+                throw new IndexOutOfRangeException();
             _dtos.RemoveAt(index);
-            return true;
         }
     }
 }

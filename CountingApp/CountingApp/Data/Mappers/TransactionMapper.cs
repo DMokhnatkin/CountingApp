@@ -34,25 +34,26 @@ namespace CountingApp.Data.Mappers
             switch (dto.TransactionType)
             {
                 case "purchase":
+                    var contributors = transactionData
+                        .SelectTokens("$.Contributions")
+                        .Values<JObject>()
+                        .Select(x => new Contribution
+                        {
+                            PersonId = new Guid(x["PersonId"].Value<string>()),
+                            AmountRub = x["Value"].Value<decimal>(),
+                        })
+                        .ToArray();
+                    var personList = transactionData
+                        .SelectTokens("$.PersonList")
+                        .Values<string>()
+                        .ToArray();
+
                     return new Purchase
                     {
                         Id = dto.Id,
                         Timestamp = dto.Timestamp,
-                        Contributions = 
-                            transactionData
-                            .SelectTokens("$.Contributions")
-                            .Values<JProperty>()
-                            .Select(x => new Contribution
-                                {
-                                    AmountRub = x.Value<decimal>(),
-                                    PersonId = new Guid(x.Name)
-                                })
-                            .ToArray(),
-                        PersonList = 
-                            transactionData
-                            .SelectTokens("$.PersonList")
-                            .Values<string>()
-                            .ToArray()
+                        Contributions = contributors,
+                        PersonList = personList
                     };
             }
             return null;

@@ -1,9 +1,15 @@
-﻿using System.Linq;
+﻿using System;
+using System.Data.SqlClient;
+using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
+using CountingApp.Core.Dto;
 using CountingApp.Server.DbModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using CountingApp.Server.DbModels.Mappers;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace CountingApp.Server.Controllers
 {
@@ -12,22 +18,68 @@ namespace CountingApp.Server.Controllers
     public class TransactionsController : Controller
     {
         private readonly CountingAppDbContext _dbContext;
+        private readonly ILogger<TransactionsController> _logger;
 
-        public TransactionsController(CountingAppDbContext dbContext)
+        public TransactionsController(CountingAppDbContext dbContext, ILogger<TransactionsController> logger)
         {
             _dbContext = dbContext;
+            _logger = logger;
         }
 
         // GET api/transactions
         [HttpGet]
         public IActionResult Get()
         {
-            var sub = User.FindFirstValue("sub");
-            if (string.IsNullOrEmpty(sub))
+            var userId = GetCurUserId();
+            if (string.IsNullOrEmpty(userId))
                 return Unauthorized();
 
-            var z = _dbContext.TransactionDbModels.Where(x => x.UserId == sub).ToArray();
+            var z = _dbContext.TransactionDbModels.Where(x => x.UserId == userId).ToArray();
             return new OkObjectResult(z);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] TransactionDto transactionDto)
+        {
+            var userId = GetCurUserId();
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized();
+
+            try
+            {
+                _dbContext.TransactionDbModels.Add(transactionDto.Unmap());
+                await _dbContext.SaveChangesAsync();
+                return Ok();
+            }
+            catch (DbUpdateException ex) when ((ex.InnerException as SqlException)?.Number == 2627)
+            {
+                // Violation of primary key
+                return StatusCode(409);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Can't write to database");
+                return StatusCode(500);
+            }
+        }
+
+        [HttpPut]
+        public IActionResult Update([FromBody] TransactionDto transactionDto)
+        {
+            // Do i need this method ?
+            return Forbid();
+        }
+
+        [HttpDelete]
+        public IActionResult Delete()
+        {
+            // Do i need this method ?
+            return Forbid();
+        }
+
+        private string GetCurUserId()
+        {
+            return User.FindFirstValue("sub");
         }
     }
 }

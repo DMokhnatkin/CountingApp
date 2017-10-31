@@ -36,7 +36,7 @@ namespace CountingApp.ViewModels
 
         public async Task LoadPeopleListAsync()
         {
-            await OccupyIsBusy();
+            OccupyIsBusy();
             var people = await _peopleRepository.GetAvailablePeopleAsync() ?? new Person[0];
             People = new ObservableCollection<SelectPersonViewModel>(people.Select(x => new SelectPersonViewModel(x)));
             ReleaseIsBusy();

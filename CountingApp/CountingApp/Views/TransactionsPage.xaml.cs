@@ -1,5 +1,5 @@
 ﻿using System;
-using CountingApp.Data.Repositories.Transactions;
+using System.Threading.Tasks;
 using CountingApp.Models.Transactions;
 using CountingApp.ViewModels;
 using CountingApp.ViewModels.Transactions;
@@ -68,6 +68,11 @@ namespace CountingApp.Views
             {
                 listView.SelectedItem = null;
             }
+        }
+
+        private async void TransactionsPage_OnAppearing(object sender, EventArgs e)
+        {
+            await _viewModel.LoadTransactions();
         }
     }
 }

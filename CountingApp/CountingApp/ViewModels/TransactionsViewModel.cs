@@ -1,17 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
-using Autofac;
 using CountingApp.Data.Mappers;
 using CountingApp.Data.Repositories.Transactions;
 using CountingApp.Models;
-using CountingApp.Services;
 using CountingApp.ViewModels.Transactions;
-using IdentityModel.Client;
-using Xamarin.Auth;
 using Xamarin.Forms;
 
 namespace CountingApp.ViewModels
@@ -25,15 +19,11 @@ namespace CountingApp.ViewModels
             _transactionsRepository = DependencyService.Get<ITransactionsRepository>();
 
             Transactions = new ObservableCollection<TransactionListItemViewModel>();
-
-#pragma warning disable 4014
-            LoadTransactions();
-#pragma warning restore 4014
         }
 
-        private async Task LoadTransactions()
+        public async Task LoadTransactions()
         {
-            await OccupyIsBusy();
+            OccupyIsBusy();
 
             var transactions = await _transactionsRepository.GetAllAsync();
             Transactions = new ObservableCollection<TransactionListItemViewModel>(transactions.Select(x => new TransactionListItemViewModel(x.Unmap())));
@@ -57,14 +47,14 @@ namespace CountingApp.ViewModels
             await _transactionsRepository.AddAsync(transaction.Map());
         }
 
-        public async Task<bool> ModifyTransaction(Transaction transaction)
+        public async Task ModifyTransaction(Transaction transaction)
         {
             var vm = Transactions.FirstOrDefault(x => x.Model.Id == transaction.Id);
             if (vm == null)
-                return false;
+                throw new ArgumentException("Transaction doesn't exist");
 
             vm.ChangeModel(transaction);
-            return await _transactionsRepository.ModifyAsync(transaction.Map());
+            await _transactionsRepository.ModifyAsync(transaction.Map());
         }
 
         public async Task<bool> RemoveTransaction(Guid id)
@@ -77,9 +67,7 @@ namespace CountingApp.ViewModels
             }
             if (i == Transactions.Count)
                 return false;
-            var res = await _transactionsRepository.RemoveAsync(id);
-            if (!res)
-                return false;
+            await _transactionsRepository.RemoveAsync(id);
             Transactions.RemoveAt(i);
             return true;
         }
