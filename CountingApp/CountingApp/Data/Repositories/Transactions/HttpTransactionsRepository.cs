@@ -31,6 +31,14 @@ namespace CountingApp.Data.Repositories.Transactions
             return JsonConvert.DeserializeObject<TransactionDto[]>(resJson);
         }
 
+        public async Task<TransactionDto> Get(Guid id)
+        {
+            var res = await _client.GetAsync(_baseAddress + $"/{id.ToString()}");
+            res.EnsureSuccessStatusCode();
+            var resJson = await res.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<TransactionDto>(resJson);
+        }
+
         public async Task AddAsync(TransactionDto dto)
         {
             var res = await _client.PostAsync(_baseAddress, new StringContent(JsonConvert.SerializeObject(dto)));

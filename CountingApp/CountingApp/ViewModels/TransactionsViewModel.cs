@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using CountingApp.Data.Mappers;
@@ -21,15 +22,6 @@ namespace CountingApp.ViewModels
             Transactions = new ObservableCollection<TransactionListItemViewModel>();
         }
 
-        public async Task LoadTransactions()
-        {
-            OccupyIsBusy();
-
-            var transactions = await _transactionsRepository.GetAllAsync();
-            Transactions = new ObservableCollection<TransactionListItemViewModel>(transactions.Select(x => new TransactionListItemViewModel(x.Unmap())));
-            ReleaseIsBusy();
-        }
-
         #region Observable
 
         private ObservableCollection<TransactionListItemViewModel> _transactions;
@@ -41,10 +33,40 @@ namespace CountingApp.ViewModels
 
         #endregion
 
-        public async Task CreateTransaction(Transaction transaction)
+        /// <summary>
+        /// Reload one transaction from the server.
+        /// If transaction was in the list before it will be updated or added to the list otherwise.
+        /// </summary>
+        public async Task ReloadTransaction(Guid id)
         {
-            Transactions.Add(new TransactionListItemViewModel(transaction));
-            await _transactionsRepository.AddAsync(transaction.Map());
+            OccupyIsBusy();
+            try
+            {
+                var dto = await _transactionsRepository.Get(id);
+                var t = Transactions.SingleOrDefault(x => x.Model.Id == id);
+                if (t != null)
+                    t.ChangeModel(dto.Unmap());
+                else
+                    Transactions.Add(new TransactionListItemViewModel(dto.Unmap()));
+            }
+            catch (Exception e)
+            {
+                Debug.Fail(e.Message);
+            }
+            ReleaseIsBusy();
+        }
+
+        /// <summary>
+        /// Reload all transactions. (clear list and create anew with data from server)
+        /// </summary>
+        /// <returns></returns>
+        public async Task ReloadTransactions()
+        {
+            OccupyIsBusy();
+
+            var transactions = await _transactionsRepository.GetAllAsync();
+            Transactions = new ObservableCollection<TransactionListItemViewModel>(transactions.Select(x => new TransactionListItemViewModel(x.Unmap())));
+            ReleaseIsBusy();
         }
 
         public async Task ModifyTransaction(Transaction transaction)

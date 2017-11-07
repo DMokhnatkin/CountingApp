@@ -38,6 +38,20 @@ namespace CountingApp.Server.Controllers
             return new OkObjectResult(z);
         }
 
+        [HttpGet("{id}")]
+        public IActionResult Get(string id)
+        {
+            var userId = GetCurUserId();
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized();
+
+            var z = _dbContext.TransactionDbModels.SingleOrDefault(x => x.TransactionId == new Guid(id));
+            if (z?.UserId != userId)
+                return new NotFoundObjectResult(null);
+
+            return new OkObjectResult(z);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] TransactionDto transactionDto)
         {

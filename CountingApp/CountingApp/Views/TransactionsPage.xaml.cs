@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
+using CountingApp.Data.Mappers;
+using CountingApp.Data.Repositories.Transactions;
 using CountingApp.Models.Transactions;
 using CountingApp.ViewModels;
 using CountingApp.ViewModels.Transactions;
@@ -22,17 +25,28 @@ namespace CountingApp.Views
 
         private async void AddPurchase_OnClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new PurchasePage());
-
             MessagingCenter.Subscribe<PurchasePage>(this, PurchasePage.DoneMessage, async page =>
             {
                 MessagingCenter.Unsubscribe<PurchasePage>(this, PurchasePage.DoneMessage);
 
                 var model = page.ViewModel.GetModel();
                 IsBusy = true;
-                await _viewModel.CreateTransaction(model);
+                try
+                {
+                    var dto = model.Map();
+                    var transactionsRep = DependencyService.Get<ITransactionsRepository>();
+                    await transactionsRep.AddAsync(dto);
+                    await _viewModel.ReloadTransaction(dto.Id);
+                }
+                catch (Exception exc)
+                {
+                    Debug.Fail(exc.Message);
+                    // TODO: reopen page
+                }
                 IsBusy = false;
             });
+
+            await Navigation.PushAsync(new PurchasePage());
         }
 
         private async void OnDelete(object sender, EventArgs e)
@@ -72,7 +86,7 @@ namespace CountingApp.Views
 
         private async void TransactionsPage_OnAppearing(object sender, EventArgs e)
         {
-            await _viewModel.LoadTransactions();
+            await _viewModel.ReloadTransactions();
         }
     }
 }
