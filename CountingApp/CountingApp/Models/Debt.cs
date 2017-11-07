@@ -4,13 +4,13 @@ namespace CountingApp.Models
 {
     public class Debt
     {
-        public Guid ContributorId { get; set; }
+        public string ContributorId { get; set; }
 
-        public Guid FreeloaderId { get; set; }
+        public string FreeloaderId { get; set; }
 
         public decimal AmountRub { get; set; }
 
-        public Debt(Guid contributorId, Guid freeloaderId, decimal amountRub)
+        public Debt(string contributorId, string freeloaderId, decimal amountRub)
         {
             ContributorId = contributorId;
             FreeloaderId = freeloaderId;

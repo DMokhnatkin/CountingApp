@@ -49,8 +49,8 @@ namespace CountingApp.Views
 	        MessagingCenter.Subscribe<SelectPeoplePageViewModel>(this, SelectPeoplePageViewModel.ApplyMessage, selectPeoplePageViewModel =>
 	        {
                 // Нужно смержить выбранных до этого момента и выбранных после людей
-                var selectedBefore = new HashSet<Guid>(ViewModel.Contributions.Select(x => x.Model.Id));
-	            var selectedAfter = new Dictionary<Guid, Person>(selectPeoplePageViewModel.GetSelected().ToDictionary(x => x.Id, v => v));
+                var selectedBefore = new HashSet<string>(ViewModel.Contributions.Select(x => x.Model.Id));
+	            var selectedAfter = new Dictionary<string, Person>(selectPeoplePageViewModel.GetSelected().ToDictionary(x => x.Id, v => v));
 
 	            var merged = ViewModel.Contributions.ToDictionary(x => x.Model.Id, v => v);
 

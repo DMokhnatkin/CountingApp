@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using RestSharp;
 using Xamarin.Auth;
 
 namespace CountingApp.Services
@@ -16,5 +17,7 @@ namespace CountingApp.Services
         void Login();
 
         HttpClient GetClient();
+
+        RestClient GetRestClient();
     }
 }

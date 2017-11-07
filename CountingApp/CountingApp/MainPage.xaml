@@ -13,6 +13,9 @@
         <NavigationPage>
             <x:Arguments>
                 <views:TransactionsPage />
+                <!--<ContentPage>
+                    <Label>Test1</Label>
+                </ContentPage>-->
             </x:Arguments>
         </NavigationPage>
     </MasterDetailPage.Detail>

@@ -4,8 +4,11 @@ using System.Linq;
 using System.Net.Http;
 using Autofac;
 using CountingApp.Helpers;
+using RestSharp;
+using RestSharp.Authenticators;
 using Xamarin.Auth;
 using Xamarin.Forms;
+using OAuth2Authenticator = Xamarin.Auth.OAuth2Authenticator;
 
 namespace CountingApp.Services
 {
@@ -14,6 +17,7 @@ namespace CountingApp.Services
         private Account _account;
         private readonly AccountStore _accountStore;
         private HttpClient _curClient;
+        private RestClient _curRestClient;
 
         public AuthService()
         {
@@ -36,6 +40,18 @@ namespace CountingApp.Services
             _curClient = new HttpClient();
             _curClient.SetBearerToken(CurAccount.Properties["access_token"]);
             return _curClient;
+        }
+
+        public RestClient GetRestClient()
+        {
+            if (_curRestClient != null)
+                return _curRestClient;
+            _curRestClient = new RestClient
+            {
+                Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(CurAccount.Properties["access_token"], "Bearer")
+            };
+            //_curRestClient.AddDefaultHeader("Authorization", "Bearer " + CurAccount.Properties["access_token"]);
+            return _curRestClient;
         }
 
         public void Login()

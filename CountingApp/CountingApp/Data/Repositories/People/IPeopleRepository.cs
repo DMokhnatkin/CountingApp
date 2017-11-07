@@ -1,13 +1,12 @@
-﻿using System;
-using System.Threading.Tasks;
-using CountingApp.Models;
+﻿using System.Threading.Tasks;
+using CountingApp.Core.Dto;
 
 namespace CountingApp.Data.Repositories.People
 {
     interface IPeopleRepository
     {
-        Task<Person> GetAsync(Guid id);
+        Task<PersonDto[]> GetAsync(string[] id);
 
-        Task<Person[]> GetAvailablePeopleAsync();
+        Task<PersonDto[]> GetAvailablePeopleAsync();
     }
 }

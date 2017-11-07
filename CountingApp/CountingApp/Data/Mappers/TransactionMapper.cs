@@ -39,7 +39,7 @@ namespace CountingApp.Data.Mappers
                         .Values<JObject>()
                         .Select(x => new Contribution
                         {
-                            PersonId = new Guid(x["PersonId"].Value<string>()),
+                            PersonId = x["PersonId"].Value<string>(),
                             AmountRub = x["Value"].Value<decimal>(),
                         })
                         .ToArray();

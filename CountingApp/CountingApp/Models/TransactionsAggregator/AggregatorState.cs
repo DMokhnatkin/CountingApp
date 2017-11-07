@@ -5,14 +5,14 @@ namespace CountingApp.Models.TransactionsAggregator
 {
     public class AggregatorState : IDebtsAggregatorState
     {
-        private readonly Dictionary<(Guid, Guid), decimal> _debts;
+        private readonly Dictionary<(string, string), decimal> _debts;
 
         public AggregatorState()
         {
-            _debts = new Dictionary<(Guid, Guid), decimal>();
+            _debts = new Dictionary<(string, string), decimal>();
         }
 
-        public void IncreaseDebt(Guid who, Guid whom, decimal amountRub)
+        public void IncreaseDebt(string who, string whom, decimal amountRub)
         {
             if (_debts.ContainsKey((who, whom)))
             {
@@ -27,7 +27,7 @@ namespace CountingApp.Models.TransactionsAggregator
             _debts.Add((who, whom), amountRub);
         }
 
-        public void DecreaseDebt(Guid who, Guid whom, decimal amountRub)
+        public void DecreaseDebt(string who, string whom, decimal amountRub)
         {
             IncreaseDebt(who, whom, -amountRub);
         }

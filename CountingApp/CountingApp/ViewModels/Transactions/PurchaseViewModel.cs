@@ -23,7 +23,7 @@ namespace CountingApp.ViewModels.Transactions
         public PurchaseViewModel(Purchase model)
         {
             var contributions = new List<ContributionViewModel>();
-            var people = model.People?.ToDictionary(key => key.Id, val => val) ?? new Dictionary<Guid, Person>();
+            var people = model.People?.ToDictionary(key => key.Id, val => val) ?? new Dictionary<string, Person>();
             foreach (var contribution in model.Contributions ?? new Contribution[0])
             {
                 contributions.Add(new ContributionViewModel(people[contribution.PersonId]) { Amount = contribution.AmountRub });

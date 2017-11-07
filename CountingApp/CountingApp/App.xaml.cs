@@ -42,7 +42,7 @@ namespace CountingApp
 	    private void RegisterDependencies()
 	    {
             // TODO: move to ApplicationIocContainer
-	        DependencyService.Register<IPeopleRepository, PeopleRepository>();
+	        DependencyService.Register<IPeopleRepository, HttpPeopleRepository>();
 	        DependencyService.Register<ITransactionsRepository, HttpTransactionsRepository>();
             DependencyService.Register<DebtsCalculationService>();
         }

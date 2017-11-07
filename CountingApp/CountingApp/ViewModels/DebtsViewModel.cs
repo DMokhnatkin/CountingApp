@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using CountingApp.Data.Mappers;
 using CountingApp.Data.Repositories.People;
 using CountingApp.Models;
 using CountingApp.Services;
@@ -28,13 +29,13 @@ namespace CountingApp.ViewModels
             Debts = new ObservableCollection<DebtViewModel>();
             foreach (var debt in debts)
             {
-                var who = await _peopleRepository.GetAsync(debt.FreeloaderId);
-                var whom = await _peopleRepository.GetAsync(debt.ContributorId);
+                var who = await _peopleRepository.GetAsync(new [] { debt.FreeloaderId });
+                var whom = await _peopleRepository.GetAsync(new [] { debt.ContributorId });
 
                 Debts.Add(new DebtViewModel
                 {
-                    Who = who,
-                    Whom = whom,
+                    Who = who[0].Unmap(),
+                    Whom = whom[0].Unmap(),
                     AmountRub = debt.AmountRub
                 });
             }

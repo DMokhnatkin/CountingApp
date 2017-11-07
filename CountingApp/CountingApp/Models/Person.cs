@@ -4,11 +4,11 @@ namespace CountingApp.Models
 {
     public class Person : IEquatable<Person>
     {
-        public Guid Id { get; }
+        public string Id { get; }
 
         public string DisplayName { get; set; }
 
-        public Person(Guid id, string displayName)
+        public Person(string id, string displayName)
         {
             Id = id;
             DisplayName = displayName;

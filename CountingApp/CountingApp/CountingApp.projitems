@@ -14,12 +14,12 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ApplicationIocContainer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\IconButton.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Mappers\PersonMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\Mappers\TransactionMapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Repositories\People\HttpPeopleRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\Repositories\People\IPeopleRepository.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Data\Repositories\People\PeopleRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\Repositories\Transactions\HttpTransactionsRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\Repositories\Transactions\ITransactionsRepository.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Data\Repositories\Transactions\FakeTransactionsRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\AuthenticationState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ConstantsSecret.cs" />
