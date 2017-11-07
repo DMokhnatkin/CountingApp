@@ -59,6 +59,10 @@ namespace CountingApp.Server.Controllers
             if (string.IsNullOrEmpty(userId))
                 return Unauthorized();
 
+            if (transactionDto.UserId != null && transactionDto.UserId == userId)
+                return new BadRequestObjectResult($"{nameof(transactionDto.UserId)} must be null or equal to user id (from oauth2 token)");
+            transactionDto.UserId = userId;
+
             try
             {
                 _dbContext.TransactionDbModels.Add(transactionDto.Unmap());

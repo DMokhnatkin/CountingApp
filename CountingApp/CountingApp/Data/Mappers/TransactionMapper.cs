@@ -3,6 +3,7 @@ using System.Linq;
 using CountingApp.Core.Dto;
 using CountingApp.Models;
 using CountingApp.Models.Transactions;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace CountingApp.Data.Mappers
@@ -16,14 +17,34 @@ namespace CountingApp.Data.Mappers
             switch (transaction)
             {
                 case Purchase purchase:
-                    throw new NotImplementedException();
+                    var contributions = new JArray();
+                    if (purchase.Contributions != null && purchase.Contributions.Length != 0)
+                    {
+                        contributions = new JArray(purchase.Contributions.Select(x =>
+                        {
+                            dynamic obj = new JObject();
+                            obj.PersonId = x.PersonId;
+                            obj.Value = x.AmountRub;
+                            return obj;
+                        }));
+                    }
+                    var personList = new JArray();
+                    if (purchase.PersonList != null && purchase.PersonList.Length != 0)
+                    {
+                        personList = new JArray(purchase.PersonList.Select(x => new JValue(x)));
+                    }
+
+                    transactionData.Add("Contributions", contributions);
+                    transactionData.Add("PersonList", personList);
                     break;
             }
             return new TransactionDto
             {
                 TransactionType = "purchase",
                 Id = transaction.Id,
-                Timestamp = transaction.Timestamp
+                Timestamp = transaction.Timestamp,
+                TotalAmount = transaction.TotalAmountRub,
+                TransactionData = transactionData.ToString(Formatting.None)
             };
         }
 
@@ -53,7 +74,8 @@ namespace CountingApp.Data.Mappers
                         Id = dto.Id,
                         Timestamp = dto.Timestamp,
                         Contributions = contributors,
-                        PersonList = personList
+                        PersonList = personList,
+                        People = personList.Select(x => new Person(x, "disp " + x)).ToArray() // TODO: remove
                     };
             }
             return null;

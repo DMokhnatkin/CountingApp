@@ -42,7 +42,7 @@ namespace CountingApp.ViewModels
             OccupyIsBusy();
             try
             {
-                var dto = await _transactionsRepository.Get(id);
+                var dto = await _transactionsRepository.GetAsync(id);
                 var t = Transactions.SingleOrDefault(x => x.Model.Id == id);
                 if (t != null)
                     t.ChangeModel(dto.Unmap());

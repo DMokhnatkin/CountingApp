@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Autofac;
@@ -9,6 +11,7 @@ using CountingApp.Models;
 using CountingApp.Models.Transactions;
 using CountingApp.Services;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace CountingApp.Data.Repositories.Transactions
 {
@@ -31,7 +34,7 @@ namespace CountingApp.Data.Repositories.Transactions
             return JsonConvert.DeserializeObject<TransactionDto[]>(resJson);
         }
 
-        public async Task<TransactionDto> Get(Guid id)
+        public async Task<TransactionDto> GetAsync(Guid id)
         {
             var res = await _client.GetAsync(_baseAddress + $"/{id.ToString()}");
             res.EnsureSuccessStatusCode();
@@ -41,8 +44,9 @@ namespace CountingApp.Data.Repositories.Transactions
 
         public async Task AddAsync(TransactionDto dto)
         {
-            var res = await _client.PostAsync(_baseAddress, new StringContent(JsonConvert.SerializeObject(dto)));
-            res.EnsureSuccessStatusCode();
+            var content = new StringContent(JsonConvert.SerializeObject(dto), Encoding.UTF8, "application/json");
+            var result = await _client.PostAsync($"{_baseAddress}", content);
+            result.EnsureSuccessStatusCode();
         }
 
         public async Task ModifyAsync(TransactionDto dto)

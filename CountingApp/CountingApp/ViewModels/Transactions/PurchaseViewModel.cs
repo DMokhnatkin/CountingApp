@@ -67,7 +67,8 @@ namespace CountingApp.ViewModels.Transactions
             {
                 Id = _transactionId,
                 Contributions = Contributions.Select(x => new Contribution{ AmountRub = x.Amount, PersonId = x.Model.Id }).ToArray(),
-                People = Contributions.Select(x => x.Model).Concat(Freeloaders).Distinct().ToArray(),
+                //People = Contributions.Select(x => x.Model).Concat(Freeloaders).Distinct().ToArray(),
+                PersonList = Contributions.Select(x => x.Model).Concat(Freeloaders).Select(x => x.Id).Distinct().ToArray(),
                 Description = Description,
                 Timestamp = DateTime.Now
             };

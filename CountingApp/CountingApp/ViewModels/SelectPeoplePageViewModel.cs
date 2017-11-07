@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CountingApp.Data.Mappers;
 using CountingApp.Data.Repositories.People;
 using CountingApp.Models;
+using Xamarin.Forms;
 
 namespace CountingApp.ViewModels
 {
@@ -15,7 +16,7 @@ namespace CountingApp.ViewModels
 
         public SelectPeoplePageViewModel()
         {
-            _peopleRepository = new HttpPeopleRepository();
+            _peopleRepository = DependencyService.Get<IPeopleRepository>();
         }
 
         public const string ApplyMessage = "Apply";

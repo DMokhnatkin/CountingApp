@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net.Http;
+using System.Threading.Tasks;
 using Autofac;
 using CountingApp.Core.Config;
 using CountingApp.Core.Dto;
@@ -10,16 +11,18 @@ namespace CountingApp.Data.Repositories.People
 {
     public class HttpPeopleRepository : IPeopleRepository
     {
-        private readonly RestClient _client;
+        private readonly HttpClient _client;
         private static string _baseAddress = Uris.CoreServerUri + "/api/users";
 
         public HttpPeopleRepository()
         {
-            _client = ApplicationIocContainer.CurrentContainer.Resolve<IAuthService>().GetRestClient();
+            _client = ApplicationIocContainer.CurrentContainer.Resolve<IAuthService>().GetClient();
         }
 
         public async Task<PersonDto[]> GetAsync(string[] ids)
         {
+            //var request = new RestRequest($"{_baseAddress}/available", Method.GET);
+
             //var request = new RestRequest($"{_baseAddress}/names", Method.GET);
             //foreach (var id in ids)
             //{
@@ -37,8 +40,10 @@ namespace CountingApp.Data.Repositories.People
             //var request = new RestRequest($"{_baseAddress}/available", Method.GET);
             //var res = await _client.ExecuteGetTaskAsync(request);
 
-            //return JsonConvert.DeserializeObject<PersonDto[]>(res.Content);
-            return new PersonDto[0];
+            var resp = await _client.GetAsync($"{_baseAddress}/available");
+            resp.EnsureSuccessStatusCode();
+            var res = await resp.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<PersonDto[]>(res);
         }
     }
 }
