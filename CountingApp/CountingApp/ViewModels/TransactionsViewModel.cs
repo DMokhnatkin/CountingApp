@@ -3,15 +3,17 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Autofac;
 using CountingApp.Data.Mappers;
 using CountingApp.Data.Repositories.Transactions;
 using CountingApp.Models;
+using CountingApp.Services;
 using CountingApp.ViewModels.Transactions;
 using Xamarin.Forms;
 
 namespace CountingApp.ViewModels
 {
-    public class TransactionsViewModel : BaseViewModel
+    public class TransactionsViewModel : BaseViewModel, ILoadableViewModel
     {
         private readonly ITransactionsRepository _transactionsRepository;
 
@@ -92,6 +94,15 @@ namespace CountingApp.ViewModels
             await _transactionsRepository.RemoveAsync(id);
             Transactions.RemoveAt(i);
             return true;
+        }
+
+        public async Task Load()
+        {
+            // TODO: It is not place for authorization
+            var authService = ApplicationIocContainer.CurrentContainer.Resolve<IAuthService>();
+            if (!authService.IsAuthenticated)
+                authService.Login();
+            await ReloadTransactions();
         }
     }
 }

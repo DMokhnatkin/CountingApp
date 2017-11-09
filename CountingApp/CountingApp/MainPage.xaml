@@ -8,15 +8,4 @@
     <MasterDetailPage.Master>
         <views:MasterPage x:Name="masterPage"></views:MasterPage>
     </MasterDetailPage.Master>
-
-    <MasterDetailPage.Detail>
-        <NavigationPage>
-            <x:Arguments>
-                <views:TransactionsPage />
-                <!--<ContentPage>
-                    <Label>Test1</Label>
-                </ContentPage>-->
-            </x:Arguments>
-        </NavigationPage>
-    </MasterDetailPage.Detail>
 </MasterDetailPage>

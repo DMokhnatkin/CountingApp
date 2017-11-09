@@ -16,7 +16,9 @@ namespace CountingApp.Views
 
         private void Login_OnClicked(object sender, EventArgs e)
         {
-            ApplicationIocContainer.CurrentContainer.Resolve<IAuthService>().Login();
+            var authService = ApplicationIocContainer.CurrentContainer.Resolve<IAuthService>();
+            if (!authService.IsAuthenticated)
+                authService.Login();
         }
     }
 }

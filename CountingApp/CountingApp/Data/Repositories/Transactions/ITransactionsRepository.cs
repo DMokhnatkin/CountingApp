@@ -10,7 +10,7 @@ namespace CountingApp.Data.Repositories.Transactions
 
         Task<TransactionDto> GetAsync(Guid id);
 
-        Task AddAsync(TransactionDto dto);
+        Task<TransactionDto> AddAsync(TransactionDto dto);
 
         Task ModifyAsync(TransactionDto dto);
 

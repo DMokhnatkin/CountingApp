@@ -42,11 +42,13 @@ namespace CountingApp.Data.Repositories.Transactions
             return JsonConvert.DeserializeObject<TransactionDto>(resJson);
         }
 
-        public async Task AddAsync(TransactionDto dto)
+        public async Task<TransactionDto> AddAsync(TransactionDto dto)
         {
             var content = new StringContent(JsonConvert.SerializeObject(dto), Encoding.UTF8, "application/json");
             var result = await _client.PostAsync($"{_baseAddress}", content);
             result.EnsureSuccessStatusCode();
+            var resultContent = await result.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<TransactionDto>(resultContent);
         }
 
         public async Task ModifyAsync(TransactionDto dto)

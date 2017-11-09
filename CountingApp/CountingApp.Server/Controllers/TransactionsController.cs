@@ -67,7 +67,7 @@ namespace CountingApp.Server.Controllers
             {
                 _dbContext.TransactionDbModels.Add(transactionDto.Unmap());
                 await _dbContext.SaveChangesAsync();
-                return Ok();
+                return Ok(transactionDto);
             }
             catch (DbUpdateException ex) when ((ex.InnerException as SqlException)?.Number == 2627)
             {

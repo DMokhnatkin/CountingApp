@@ -21,12 +21,12 @@ namespace CountingApp
 
 		    RegisterDependencies();
 
-            MainPage = new MainPage();
-		}
+		    MainPage = new MainPage();
+        }
 
-		protected override void OnStart ()
+        protected override void OnStart ()
 		{
-			// Handle when your app starts
+		    // Handle when your app starts
 		}
 
 		protected override void OnSleep ()

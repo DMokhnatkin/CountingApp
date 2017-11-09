@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Autofac;
 using CountingApp.Data.Mappers;
 using CountingApp.Data.Repositories.Transactions;
 using CountingApp.Models.Transactions;
+using CountingApp.Services;
 using CountingApp.ViewModels;
 using CountingApp.ViewModels.Transactions;
 using Xamarin.Forms;
@@ -15,6 +17,7 @@ namespace CountingApp.Views
     public partial class TransactionsPage : ContentPage
     {
         private readonly TransactionsViewModel _viewModel;
+        public TransactionsViewModel ViewModel => _viewModel;
 
         public TransactionsPage()
         {
@@ -35,8 +38,8 @@ namespace CountingApp.Views
                 {
                     var dto = model.Map();
                     var transactionsRep = DependencyService.Get<ITransactionsRepository>();
-                    await transactionsRep.AddAsync(dto);
-                    await _viewModel.ReloadTransaction(dto.Id);
+                    var resDto = await transactionsRep.AddAsync(dto);
+                    await _viewModel.ReloadTransaction(resDto.Id);
                 }
                 catch (Exception exc)
                 {
@@ -82,11 +85,6 @@ namespace CountingApp.Views
             {
                 listView.SelectedItem = null;
             }
-        }
-
-        private async void TransactionsPage_OnAppearing(object sender, EventArgs e)
-        {
-            await _viewModel.ReloadTransactions();
         }
     }
 }
