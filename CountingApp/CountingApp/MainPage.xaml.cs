@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,45 +14,88 @@ namespace CountingApp
 {
 	public partial class MainPage : MasterDetailPage
 	{
+	    private readonly List<Page> _pages = new List<Page>();
+
 		public MainPage()
 		{
 			InitializeComponent();
 
-            masterPage.ListView.ItemSelected += OnItemSelected;
-		    if (masterPage.ListView.SelectedItem is MasterPage.MasterPageItem item)
+		    foreach (var item in masterPage.ListView.ItemsSource.OfType<MasterPage.MasterPageItem>())
 		    {
-		        LoadDetailPage(item);
-		    }
-		    else
-		    {
-		        throw new ArgumentException("Can't load first item from master page to detail");
+		        InstantiatePage(item);
 		    }
 
-	        if (Device.RuntimePlatform == Device.WinPhone)
+		    if (masterPage.ListView.SelectedItem is MasterPage.MasterPageItem firstPageItem)
+		        ShowDetailPage(firstPageItem);
+		    else
+		        throw new ArgumentException("Can't load first item from master page to detail");
+
+            masterPage.ListView.ItemSelected += OnItemSelected;
+
+            if (Device.RuntimePlatform == Device.WinPhone)
 	        {
 	            MasterBehavior = MasterBehavior.Popover;
 	        }
-	    }
 
-	    void LoadDetailPage(MasterPage.MasterPageItem item)
+		}
+
+	    protected override async void OnAppearing()
+	    {
+            // Update data on detail page
+            // TODO: how to handle exceptions?
+	        //await LoadPageData();
+
+	        base.OnAppearing();
+        }
+
+        /// <summary>
+        /// Create and add to _pages
+        /// </summary>
+        void InstantiatePage(MasterPage.MasterPageItem item)
 	    {
 	        var page = (Page)Activator.CreateInstance(item.TargetType);
 	        page.BindingContext = Activator.CreateInstance(item.TargetTypeViewModel);
-	        if (page.BindingContext is ILoadableViewModel loadablevm)
-	            // Await in different thread (so we wouldn't block GUI and will catch exceptions)
-	            Task.Factory.StartNew(async () => await loadablevm.Load());
+            _pages.Add(page);
+        }
 
-	        Detail = new NavigationPage(page);
-	        masterPage.ListView.SelectedItem = null;
+        /// <summary>
+        /// Load page data
+        /// </summary>
+	    async Task LoadPageData(Page page)
+	    {
+	        if (page.BindingContext is ILoadableViewModel loadablevm)
+	        {
+	            try
+	            {
+	                await loadablevm.Load();
+                }
+                catch (Exception e)
+	            {
+	                Debug.Fail(e.Message);
+	            }
+            }
+        }
+
+        /// <summary>
+        /// This method will set up detail page and then start loading data for this page (async)
+        /// </summary>
+	    async void ShowDetailPage(MasterPage.MasterPageItem item)
+	    {
+	        var page = _pages.SingleOrDefault(x => x.Title == item.Title);
+	        if (page == null)
+	            throw new ArgumentException($"Can't find page with {item.Title} title");
+            Detail = new NavigationPage(page);
 	        IsPresented = false;
+
+            await LoadPageData(page);
         }
 
 	    void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
 	    {
 	        if (e.SelectedItem is MasterPage.MasterPageItem item)
 	        {
-	            LoadDetailPage(item);
+	            ShowDetailPage(item);
 	        }
-        }
+	    }
 	}
 }
