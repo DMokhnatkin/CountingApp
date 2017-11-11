@@ -12,7 +12,7 @@ namespace CountingApp
         {
             var bld = new ContainerBuilder();
             bld.Register(x => AccountStore.Create()).As<AccountStore>();
-            bld.RegisterType<AuthService>().As<IAuthService>();
+            bld.RegisterType<AuthService>().As<IAuthService>().SingleInstance();
 
             CurrentContainer = bld.Build();
         }

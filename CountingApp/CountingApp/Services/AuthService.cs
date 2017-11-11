@@ -25,7 +25,7 @@ namespace CountingApp.Services
             _account = _accountStore.FindAccountsForService(Constants.AppName).FirstOrDefault();
         }
 
-        public bool IsAuthenticated { get; private set; }
+        public bool IsAuthenticated { get; set; }
 
         public string AuthToken { get; private set; }
 
@@ -50,7 +50,6 @@ namespace CountingApp.Services
             {
                 Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(CurAccount.Properties["access_token"], "Bearer")
             };
-            //_curRestClient.AddDefaultHeader("Authorization", "Bearer " + CurAccount.Properties["access_token"]);
             return _curRestClient;
         }
 
@@ -109,6 +108,7 @@ namespace CountingApp.Services
 
                 await _accountStore.SaveAsync(_account = e.Account, Constants.AppName);
 
+                IsAuthenticated = true;
                 //var client = new HttpClient();
                 //client.SetBearerToken(e.Account.Properties["access_token"]);
                 //client.BaseAddress = new Uri("http://pc.mokhnatkin.org:5051/");
