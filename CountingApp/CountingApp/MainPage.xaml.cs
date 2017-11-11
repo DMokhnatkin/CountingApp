@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Autofac;
-using CountingApp.Services;
 using CountingApp.ViewModels;
 using CountingApp.Views;
-using Xamarin.Auth;
 using Xamarin.Forms;
 
 namespace CountingApp
@@ -36,17 +33,7 @@ namespace CountingApp
 	        {
 	            MasterBehavior = MasterBehavior.Popover;
 	        }
-
 		}
-
-	    protected override async void OnAppearing()
-	    {
-            // Update data on detail page
-            // TODO: how to handle exceptions?
-	        //await LoadPageData();
-
-	        base.OnAppearing();
-        }
 
         /// <summary>
         /// Create and add to _pages
