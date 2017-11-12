@@ -25,7 +25,7 @@ namespace CountingApp.Models.Transactions
 
         public Person[] ExtractFreeloaders()
         {
-            var contributions = Contributions.ToDictionary(key => key.PersonId, val => val);
+            var contributions = Contributions.ToDictionary(key => key.Person.Id, val => val);
 
             return People.Where(x => !contributions.ContainsKey(x.Id)).ToArray();
         }
@@ -39,9 +39,9 @@ namespace CountingApp.Models.Transactions
                     var eachPersonDebtRub = contribution.AmountRub / People.Length;
                     foreach (var person in People)
                     {
-                        if (person.Id == contribution.PersonId)
+                        if (person.Id == contribution.Person.Id)
                             continue;
-                        debtsState.IncreaseDebt(person.Id, contribution.PersonId, eachPersonDebtRub);
+                        debtsState.IncreaseDebt(person.Id, contribution.Person.Id, eachPersonDebtRub);
                     }
                 }
                 return;

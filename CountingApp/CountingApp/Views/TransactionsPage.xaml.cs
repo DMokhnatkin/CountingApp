@@ -10,6 +10,7 @@ using CountingApp.ViewModels;
 using CountingApp.ViewModels.Transactions;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using CountingApp.Views.Transactions;
 
 namespace CountingApp.Views
 {

@@ -47,6 +47,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\EntryDialogs\EntryDialogViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ILoadableViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SelectPeoplePageViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SelectPersonViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\TransactionsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Transactions\PurchaseViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Transactions\TransactionListItemViewModel.cs" />
@@ -65,10 +66,19 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\SelectPeoplePage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\Transactions\PurchasePage.xaml.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Views\SelectPersonPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\TransactionsPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Transactions\ContributorsPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Transactions\FreeloadersPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Transactions\PurchasePage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -92,11 +102,6 @@
     <Folder Include="$(MSBuildThisFileDirectory)Controls\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Transactions\PurchasePage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\SelectPeoplePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -118,6 +123,26 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\EntryDialogs\EntryDialog.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Transactions\PurchasePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Transactions\ContributorsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Transactions\FreeloadersPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\SelectPersonPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

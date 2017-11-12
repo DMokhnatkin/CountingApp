@@ -23,7 +23,7 @@ namespace CountingApp.Data.Mappers
                         contributions = new JArray(purchase.Contributions.Select(x =>
                         {
                             dynamic obj = new JObject();
-                            obj.PersonId = x.PersonId;
+                            obj.PersonId = x.Person.Id;
                             obj.Value = x.AmountRub;
                             return obj;
                         }));
@@ -60,7 +60,7 @@ namespace CountingApp.Data.Mappers
                         .Values<JObject>()
                         .Select(x => new Contribution
                         {
-                            PersonId = x["PersonId"].Value<string>(),
+                            Person = new Person(x["PersonId"].Value<string>(), "disp " + x),//todo
                             AmountRub = x["Value"].Value<decimal>(),
                         })
                         .ToArray();

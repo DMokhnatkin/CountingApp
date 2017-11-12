@@ -1,54 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CountingApp.Views.PurchasePage"
-             Title="Покупка">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Icon="done.png" Clicked="MenuItemDone_OnClicked"/>
-    </ContentPage.ToolbarItems>
-    <StackLayout Margin="4">
-        <!-- Спонсоры заголовок -->
-        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="5">
-            <Label Text="Спонсоры" Style="{StaticResource TitleStyle}"/>
-            <Image Source="ic_assignment_ind_black_24dp.png" Opacity="0.6">
-                <Image.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="ChangeContributors_OnClicked" />
-                </Image.GestureRecognizers>
-            </Image>
-        </StackLayout>
-
-        <!-- Спонсоры список -->
-        <ListView x:Name="ContributorsListView" ItemsSource="{Binding Contributions}" ItemTapped="ContributorsListView_OnItemTapped">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <EntryCell Label="{Binding DisplayName}" Text="{Binding Amount}" Keyboard="Numeric"/>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-
-        <!-- Нахлебники заголовок -->
-        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="5">
-            <Label Text="Нахлебники" Style="{StaticResource TitleStyle}"/>
-            <Image Source="ic_assignment_ind_black_24dp.png" Opacity="0.6">
-                <Image.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="ChangeFreeloaders_OnClicked" />
-                </Image.GestureRecognizers>
-            </Image>
-        </StackLayout>
-
-        <!-- Нахлебники список -->
-        <ListView x:Name="FreeloadersListView" ItemsSource="{Binding Freeloaders}" SeparatorVisibility="None" ItemTapped="FreeloadersListView_OnItemTapped">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextCell Text="{Binding DisplayName}"></TextCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-
-        <!-- Description title -->
-        <Label Text="Описание"></Label>
-        
-        <!-- Description -->
-        <Editor Text="{Binding Description}"></Editor>
-    </StackLayout>
-</ContentPage>
+            xmlns:me="clr-namespace:CountingApp.Views.Transactions;assembly=CountingApp.Android"
+             x:Class="CountingApp.Views.Transactions.PurchasePage"
+            Title="{Binding Description}">
+    <!--Pages can be added as references or inline-->
+    <me:CotributorsPage BindingContext="{Binding ViewModel}"/>
+    <me:FreeloadersPage BindingContext="{Binding ViewModel}"/>
+</TabbedPage>

@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CountingApp.Views.Transactions.FreeloadersPage"
+             xmlns:controls="clr-namespace:CountingApp.Controls;assembly=CountingApp.Android"
+             xmlns:fab="clr-namespace:FAB.Forms;assembly=FAB.Forms"
+             Title="Должники">
+    <ContentPage.Content>
+        <RelativeLayout x:Name="RootLayout">
+            <StackLayout Orientation="Vertical">
+                <ListView
+                    HeightRequest="{Binding Path=Height, Source={x:Reference RootLayout}}"
+                    x:Name="ContributorsList" ItemsSource="{Binding Freeloaders}"
+                    ItemTapped="ListView_OnItemTapped">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label VerticalOptions="CenterAndExpand" 
+                                           Margin="15,0,0,0"
+                                           FontSize="18" Text="{Binding DisplayName}"/>
+                                    <controls:IconButton x:Name="ClearButton" 
+                                                         WidthRequest="{Binding Path=Height, Source={x:Reference ClearButton}}" 
+                                                         HorizontalOptions="EndAndExpand" 
+                                                         VerticalOptions="CenterAndExpand" 
+                                                         Image="clear_gray.png"
+                                                         Command="{Binding Path=BindingContext.RemoveFreeloader, Source={x:Reference RootLayout}}"
+                                                         CommandParameter="{Binding}"
+                                                         Style="{StaticResource Icon}"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+            <!--primary color = #2196F3-->
+            <fab:FloatingActionButton
+				x:Name="fabBtn"
+				Source="plus.png"
+				Size="Normal"
+				Command="{Binding AddFreeloader}"
+				RippleColor="Gray"
+                NormalColor="#2196F3" 
+				RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1, Constant=-80}"
+				RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1, Constant=-80}" />
+        </RelativeLayout>
+    </ContentPage.Content>
+</ContentPage>

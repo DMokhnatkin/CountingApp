@@ -40,9 +40,16 @@ namespace CountingApp
         /// </summary>
         void InstantiatePage(MasterPage.MasterPageItem item)
 	    {
-	        var page = (Page)Activator.CreateInstance(item.TargetType);
-	        page.BindingContext = Activator.CreateInstance(item.TargetTypeViewModel);
-            _pages.Add(page);
+            try
+            {
+
+                var page = (Page)Activator.CreateInstance(item.TargetType);
+                page.BindingContext = Activator.CreateInstance(item.TargetTypeViewModel);
+                _pages.Add(page);
+            } catch (Exception e)
+            {
+                throw;
+            }
         }
 
         /// <summary>
