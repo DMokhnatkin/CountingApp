@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
-using Xamarin.Forms.Platform.Android;
 using Xamarin.Forms.Xaml;
 
 namespace CountingApp.Views.Transactions
@@ -20,7 +19,6 @@ namespace CountingApp.Views.Transactions
         public FreeloadersPage()
         {
             InitializeComponent();
-
         }
 
         private void ListView_OnItemTapped(object sender, ItemTappedEventArgs e)

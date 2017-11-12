@@ -12,7 +12,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <StackLayout>
-        <ListView ItemsSource="{Binding Transactions}" IsRefreshing="{Binding IsBusy}" HasUnevenRows="True" ItemTapped="ListView_OnItemTapped">
+        <ListView ItemsSource="{Binding Transactions}"  HasUnevenRows="True" ItemTapped="ListView_OnItemTapped">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>

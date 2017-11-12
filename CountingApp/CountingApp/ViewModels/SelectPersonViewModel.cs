@@ -21,16 +21,20 @@ namespace CountingApp.ViewModels
 
         public SelectPersonViewModel()
         {
+#if DEBUGUI
+            _peopleRepository = new PeopleRepository();
+#else
             _peopleRepository = new HttpPeopleRepository();
+#endif
         }
-        
+
 
         //by name and value like: contributionAmount : 100 rubs
         public Dictionary<string, object> AdditionalParameters { get; } = new Dictionary<string, object>();
         public INavigation Navigation { get; set; }
 
         public Person SelectedPerson { get; private set; }
-        #region Observable
+#region Observable
 
         private ObservableCollection<Person> _people;
         public ObservableCollection<Person> People
@@ -54,7 +58,10 @@ namespace CountingApp.ViewModels
                         await Navigation.PushPopupAsync(new EntryDialog(
                             new EntryDialogViewModel(async (text) => {
                                 SelectedPerson = person;
-                                AdditionalParameters.Add("amount", decimal.Parse(text));
+                                decimal amount;
+                                if (!decimal.TryParse(text, out amount))
+                                    amount = 0;
+                                AdditionalParameters.Add("amount", amount);
                                 MessagingCenter.Send(this, SelectedMessage);
                                 await Navigation.PopAsync(true);
                             })
@@ -67,7 +74,7 @@ namespace CountingApp.ViewModels
             }
         }
 
-        #endregion
+#endregion
 
         public async Task LoadPeopleListAsync()
         {

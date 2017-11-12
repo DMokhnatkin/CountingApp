@@ -1,14 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CountingApp.Views.SelectPeoplePage">
+             x:Class="CountingApp.Views.SelectPeoplePage"
+             xmlns:controls="clr-namespace:CountingApp.Controls;assembly=CountingApp.Android">
     <ContentPage.ToolbarItems>
         <ToolbarItem Icon="done.png" Clicked="MenuItem_OnClicked"/>
     </ContentPage.ToolbarItems>
-    <ListView ItemsSource="{Binding People}" IsRefreshing="{Binding IsBusy}" IsPullToRefreshEnabled="True" >
+    <ListView ItemsSource="{Binding People}" IsRefreshing="{Binding IsBusy}" IsPullToRefreshEnabled="True" ItemTapped="ListView_OnItemTapped">
         <ListView.ItemTemplate>
             <DataTemplate>
-                <SwitchCell Text="{Binding DisplayName}" On="{Binding IsSelected}" IsEnabled="{Binding IsActive}"/>
+                <ViewCell>
+                    <StackLayout Orientation="Horizontal">
+                        <Label VerticalOptions="CenterAndExpand" 
+                                           Margin="15,0,0,0"
+                                           FontSize="18" Text="{Binding DisplayName}"/>
+                        <controls:CustomCheckbox HorizontalOptions="EndAndExpand" Margin="0,0,15,0"
+                                                 Checked="{Binding IsSelected}" IsEnabled="{Binding IsActive}"/>
+                    </StackLayout>
+                </ViewCell>
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>

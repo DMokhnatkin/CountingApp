@@ -3,11 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CountingApp.Views.Transactions.FreeloadersPage"
              xmlns:controls="clr-namespace:CountingApp.Controls;assembly=CountingApp.Android"
-             xmlns:fab="clr-namespace:FAB.Forms;assembly=FAB.Forms"
+             xmlns:fab="clr-namespace:Refractored.Fab;assembly=Refractored.Fab"
              Title="Должники">
+    <!--xmlns:fab="clr-namespace:FAB.Forms;assembly=FAB.Forms"-->
     <ContentPage.Content>
-        <RelativeLayout x:Name="RootLayout">
-            <StackLayout Orientation="Vertical">
+        <StackLayout x:Name="RootLayout" Orientation="Vertical">
                 <ListView
                     HeightRequest="{Binding Path=Height, Source={x:Reference RootLayout}}"
                     x:Name="ContributorsList" ItemsSource="{Binding Freeloaders}"
@@ -32,17 +32,11 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-            </StackLayout>
-            <!--primary color = #2196F3-->
-            <fab:FloatingActionButton
-				x:Name="fabBtn"
-				Source="plus.png"
-				Size="Normal"
-				Command="{Binding AddFreeloader}"
-				RippleColor="Gray"
-                NormalColor="#2196F3" 
-				RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1, Constant=-80}"
-				RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1, Constant=-80}" />
-        </RelativeLayout>
+            <Frame Padding="0">
+                <StackLayout VerticalOptions="End" HorizontalOptions="Center" Orientation="Horizontal">
+                    <controls:IconButton Image="ic_group_add_black_24dp.png" Command="{Binding AddFreeloader}" Style="{StaticResource Icon}" ></controls:IconButton>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

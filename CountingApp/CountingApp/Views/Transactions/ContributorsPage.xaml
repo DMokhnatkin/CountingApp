@@ -3,23 +3,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:CountingApp.Controls;assembly=CountingApp.Android"
              x:Class="CountingApp.Views.Transactions.CotributorsPage"
-             xmlns:fab="clr-namespace:FAB.Forms;assembly=FAB.Forms"
+             xmlns:fab="clr-namespace:Refractored.FabControl;assembly=Refractored.FabControl"
              Title="Спонсоры">
     <ContentPage.Content>
-        <RelativeLayout x:Name="RootLayout">
-            <StackLayout Orientation="Vertical">
-                <ListView
+        <StackLayout x:Name="RootLayout" Orientation="Vertical">
+            <ListView
                     HeightRequest="{Binding Path=Height, Source={x:Reference RootLayout}}"
                     x:Name="ContributorsList" ItemsSource="{Binding Contributions}"
                     ItemTapped="ListView_OnItemTapped">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell x:Name="ListViewCell">
-                                <StackLayout Orientation="Horizontal">
-                                    <Label VerticalOptions="CenterAndExpand" 
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell x:Name="ListViewCell">
+                            <StackLayout Orientation="Horizontal">
+                                <Label VerticalOptions="CenterAndExpand" 
                                            Margin="15,0,0,0"
                                            FontSize="18" Text="{Binding Person.DisplayName}"/>
-                                    <controls:IconButton x:Name="ClearButton" 
+                                <controls:IconButton x:Name="ClearButton" 
                                                          WidthRequest="{Binding Path=Height, Source={x:Reference ClearButton}}" 
                                                          HorizontalOptions="EndAndExpand" 
                                                          VerticalOptions="CenterAndExpand" 
@@ -27,22 +26,16 @@
                                                          Command="{Binding Path=BindingContext.RemoveContribution, Source={x:Reference RootLayout}}"
                                                          CommandParameter="{Binding}"
                                                          Style="{StaticResource Icon}"/>
-                                </StackLayout>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </StackLayout>
-            <!--primary color = #2196F3-->
-            <fab:FloatingActionButton
-				x:Name="fabBtn"
-				Source="plus.png"
-				Size="Normal"
-				Command="{Binding AddContributor}"
-				RippleColor="Gray"
-                NormalColor="#2196F3" 
-				RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1, Constant=-80}"
-				RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1, Constant=-80}" />
-        </RelativeLayout>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Frame Padding="0">
+                <StackLayout VerticalOptions="End" HorizontalOptions="Center" Orientation="Horizontal">
+                    <controls:IconButton Command="{Binding AddContributor}" Image="ic_person_add_black_24dp.png" Style="{StaticResource Icon}"></controls:IconButton>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

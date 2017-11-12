@@ -1,6 +1,9 @@
 ﻿using CountingApp.Controls;
 using CountingApp.Helpers;
+using CountingApp.ViewModels.EntryDialogs;
 using CountingApp.ViewModels.Transactions;
+using CountingApp.Views.EntryDialogs;
+using Rg.Plugins.Popup.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,9 +46,17 @@ namespace CountingApp.Views.Transactions
 
         private void AddBarItems()
         {
-            ToolbarItems.Add(new ToolbarItem("Edit name", "ic_edit_white_24dp.png", () =>
+            ToolbarItems.Add(new ToolbarItem("Edit", "ic_edit_white_24dp.png", async () =>
             {
-               //entry dialog here
+                await Navigation.PushPopupAsync(new EntryDialog(
+                            new EntryDialogViewModel(async (text) => {
+                                if (!string.IsNullOrEmpty(text))
+                                    Title = text;
+                            })
+                            {
+                                Title = "Введите название покупки",
+                                Placeholder = "Например, \"Чипсы\""
+                            }));
             }));
             ToolbarItems.Add(new ToolbarItem("Done", "done.png", () => { }));
 
