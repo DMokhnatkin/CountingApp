@@ -55,7 +55,8 @@ namespace CountingApp.Views.Transactions
                             })
                             {
                                 Title = "Введите название покупки",
-                                Placeholder = "Например, \"Чипсы\""
+                                Placeholder = "Например, \"Чипсы\"",
+                                KeyboardType = Keyboard.Default
                             }));
             }));
             ToolbarItems.Add(new ToolbarItem("Done", "done.png", () => { }));

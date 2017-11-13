@@ -19,16 +19,16 @@
     <StackLayout VerticalOptions="Center" HorizontalOptions="FillAndExpand" Padding="20, 20, 20, 20">
         <StackLayout BackgroundColor="White" Padding="0, 10, 0, 0">
             <StackLayout Orientation="Vertical">
-                <Label Text="{Binding Title}"/>
+                <Label Text="{Binding Title}" HorizontalOptions="Center"/>
                 <Entry
                 x:Name="EntryField"
                 Placeholder="{Binding Placeholder}" 
                 HorizontalOptions="FillAndExpand" 
-                Keyboard="{Binding KeyboardType}"/>
+                Keyboard="{Binding KeyboardType}"
+                Margin="20"/>
                 <StackLayout Orientation="Horizontal">
-                    <Button Text="Ok"  Clicked="OnOk"/>
-                    <Button Text="Close" Clicked="OnClose"></Button>
-
+                    <Button Text="Ok"  Clicked="OnOk" HorizontalOptions="CenterAndExpand"/>
+                    <Button Text="Отмена" Clicked="OnClose" HorizontalOptions="CenterAndExpand"/>
                 </StackLayout>
             </StackLayout>
         </StackLayout>

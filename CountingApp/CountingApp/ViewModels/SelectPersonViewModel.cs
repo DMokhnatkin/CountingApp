@@ -67,7 +67,8 @@ namespace CountingApp.ViewModels
                             })
                             {
                                 Title = "Сколько заплатил?",
-                                Placeholder = "0 рублей"
+                                Placeholder = "0 рублей",
+                                KeyboardType = Keyboard.Numeric
                             }));
 
                     }));

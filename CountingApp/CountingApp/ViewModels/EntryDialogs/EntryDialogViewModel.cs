@@ -27,7 +27,7 @@ namespace CountingApp.ViewModels.EntryDialogs
         private Keyboard _keyboardType;
         public Keyboard KeyboardType
         {
-            get => Keyboard.Numeric;
+            get => _keyboardType ?? Keyboard.Default;
             set => SetProperty(ref _keyboardType, value);
         }
 

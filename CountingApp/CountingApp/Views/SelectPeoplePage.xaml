@@ -6,7 +6,7 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Icon="done.png" Clicked="MenuItem_OnClicked"/>
     </ContentPage.ToolbarItems>
-    <ListView ItemsSource="{Binding People}" IsRefreshing="{Binding IsBusy}" IsPullToRefreshEnabled="True" ItemTapped="ListView_OnItemTapped">
+    <ListView ItemsSource="{Binding People}" ItemTapped="ListView_OnItemTapped">
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>
