@@ -5,11 +5,5 @@
         public string Id { get; set; }
 
         public string DisplayName { get; set; }
-
-        public PersonDto(string id, string displayName)
-        {
-            Id = id;
-            DisplayName = displayName;
-        }
     }
 }
