@@ -30,5 +30,15 @@ namespace CountingApp.Views
             if (BindingContext is SelectPersonViewModel vm)
                 vm.Navigation = Navigation;
         }
+
+        private void ListView_OnItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            // TODO: remove
+            // Нам не нужно выделение в ListView
+            if (sender is ListView listView)
+            {
+                listView.SelectedItem = null;
+            }
+        }
     }
 }

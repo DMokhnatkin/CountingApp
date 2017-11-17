@@ -28,6 +28,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ConstantsSecret.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ImageResourceExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\InvertBoolConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\MoneyToDisplayStringConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ObservableObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

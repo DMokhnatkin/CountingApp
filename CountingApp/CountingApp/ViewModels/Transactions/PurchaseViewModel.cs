@@ -134,7 +134,6 @@ namespace CountingApp.ViewModels.Transactions
 
         private async void AddContributorImpl()
         {
-            var amountKey = "amount";
             var selectPersonViewModel = new SelectPersonViewModel();
             await selectPersonViewModel.LoadPeopleListAsync();
             var selectPersonPage = new SelectPersonPage(selectPersonViewModel);

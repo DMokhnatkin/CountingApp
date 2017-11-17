@@ -2,9 +2,14 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:CountingApp.Controls;assembly=CountingApp.Android"
+            xmlns:helpers="clr-namespace:CountingApp.Helpers;assembly=CountingApp.Android"
              x:Class="CountingApp.Views.Transactions.CotributorsPage"
-             xmlns:fab="clr-namespace:Refractored.FabControl;assembly=Refractored.FabControl"
              Title="Спонсоры">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <helpers:MoneyToDisplayStringConverter x:Key="cnvMoney"></helpers:MoneyToDisplayStringConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout x:Name="RootLayout" Orientation="Vertical">
             <ListView
@@ -18,7 +23,11 @@
                                 <Label VerticalOptions="CenterAndExpand" 
                                            Margin="15,0,0,0"
                                            FontSize="18" Text="{Binding Person.DisplayName}"/>
-                                <controls:IconButton x:Name="ClearButton" 
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                                    <Label VerticalOptions="Center"
+                                       HorizontalOptions="EndAndExpand"
+                                    FontSize="18" Text="{Binding AmountRub, Converter={StaticResource cnvMoney}}"/>
+                                    <controls:IconButton x:Name="ClearButton" 
                                                          WidthRequest="{Binding Path=Height, Source={x:Reference ClearButton}}" 
                                                          HorizontalOptions="EndAndExpand" 
                                                          VerticalOptions="CenterAndExpand" 
@@ -26,6 +35,8 @@
                                                          Command="{Binding Path=BindingContext.RemoveContribution, Source={x:Reference RootLayout}}"
                                                          CommandParameter="{Binding}"
                                                          Style="{StaticResource Icon}"/>
+                                </StackLayout>
+                                
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
