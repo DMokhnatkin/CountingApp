@@ -17,14 +17,11 @@ namespace CountingApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TransactionsPage : ContentPage
     {
-        private readonly TransactionsViewModel _viewModel;
-        public TransactionsViewModel ViewModel => _viewModel;
+        public TransactionsViewModel ViewModel => BindingContext as TransactionsViewModel;
 
         public TransactionsPage()
         {
             InitializeComponent();
-
-            BindingContext = _viewModel = new TransactionsViewModel();
         }
 
         private async void AddPurchase_OnClicked(object sender, EventArgs e)
@@ -40,7 +37,7 @@ namespace CountingApp.Views
                     var dto = model.Map();
                     var transactionsRep = DependencyService.Get<ITransactionsRepository>();
                     var resDto = await transactionsRep.AddAsync(dto);
-                    await _viewModel.ReloadTransaction(resDto.Id);
+                    if (ViewModel != null) await ViewModel?.ReloadTransaction(resDto.Id);
                 }
                 catch (Exception exc)
                 {
@@ -57,7 +54,7 @@ namespace CountingApp.Views
         {
             if (((MenuItem)sender).CommandParameter is TransactionListItemViewModel transactionListItemViewModel)
             {
-                await _viewModel.RemoveTransaction(transactionListItemViewModel.Model.Id);
+                if (ViewModel != null) await ViewModel?.RemoveTransaction(transactionListItemViewModel.Model.Id);
             }
         }
 
@@ -70,7 +67,7 @@ namespace CountingApp.Views
                     MessagingCenter.Unsubscribe<PurchasePage>(this, PurchasePage.DoneMessage);
 
                     var model = page.ViewModel.GetModel();
-                    await _viewModel.ModifyTransaction(model);
+                    if (ViewModel != null) await ViewModel?.ModifyTransaction(model);
                 });
 
                 // TODO: возможность работы с более чем одним типом транзакций
