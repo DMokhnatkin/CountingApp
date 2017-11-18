@@ -10,14 +10,10 @@ namespace CountingApp.Services
 
         bool IsAuthenticated { get; }
 
-        string AuthToken { get; }
-
         WebAuthenticator CurAuthenticator { get; }
 
-        void Login();
+        void SignIn();
 
         HttpClient GetClient();
-
-        RestClient GetRestClient();
     }
 }

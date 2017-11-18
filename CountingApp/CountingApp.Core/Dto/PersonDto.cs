@@ -11,5 +11,8 @@
             Id = id;
             DisplayName = displayName;
         }
+
+        public PersonDto()
+        { }
     }
 }

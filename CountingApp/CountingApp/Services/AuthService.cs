@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net.Http;
 using Autofac;
 using CountingApp.Helpers;
-using RestSharp;
-using RestSharp.Authenticators;
 using Xamarin.Auth;
 using Xamarin.Forms;
 using OAuth2Authenticator = Xamarin.Auth.OAuth2Authenticator;
@@ -14,46 +13,59 @@ namespace CountingApp.Services
 {
     public class AuthService : IAuthService
     {
-        private Account _account;
         private readonly AccountStore _accountStore;
-        private HttpClient _curClient;
-        private RestClient _curRestClient;
 
         public AuthService()
         {
             _accountStore = ApplicationIocContainer.CurrentContainer.Resolve<AccountStore>();
-            _account = _accountStore.FindAccountsForService(Constants.AppName).FirstOrDefault();
+            CurAccount = _accountStore.FindAccountsForService(Constants.AppName).FirstOrDefault();
         }
 
-        public bool IsAuthenticated { get; set; }
-
-        public string AuthToken { get; private set; }
+        /// <summary>
+        /// Whether a token for user was received and it is not expired.
+        /// </summary>
+        public bool IsAuthenticated => _curAccessToken != null && _curAccessToken.ValidTo > DateTime.UtcNow;
 
         public WebAuthenticator CurAuthenticator { get; private set; }
 
-        public Account CurAccount => _account;
+        // Just cache for CurAccount.Properties["access_token"]
+        private JwtSecurityToken _curAccessToken;
 
+        private Account _curAccount;
+        public Account CurAccount
+        {
+            get => _curAccount;
+            private set
+            {
+                _curAccount = value;
+                if (value != null)
+                    _curAccessToken = value.Properties.ContainsKey("access_token") ? new JwtSecurityToken(value.Properties["access_token"]) : null;
+            }   
+        }
+
+        /// <summary>
+        /// Returns HttpClient with setted authorization header (if user is not signed in, this method will call Sign In)
+        /// </summary>
         public HttpClient GetClient()
         {
-            if (_curClient != null)
-                return _curClient;
-            _curClient = new HttpClient();
-            _curClient.SetBearerToken(CurAccount.Properties["access_token"]);
-            return _curClient;
+            if (IsAuthenticated)
+                return BuildClient();
+
+            SignIn();
+            return BuildClient();
         }
 
-        public RestClient GetRestClient()
+        private HttpClient BuildClient()
         {
-            if (_curRestClient != null)
-                return _curRestClient;
-            _curRestClient = new RestClient
-            {
-                Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(CurAccount.Properties["access_token"], "Bearer")
-            };
-            return _curRestClient;
+            var client = new HttpClient();
+            client.SetBearerToken(_curAccessToken.RawData);
+            return client;
         }
 
-        public void Login()
+        /// <summary>
+        /// Sign user in system. This method can show ui for loggin (if required)
+        /// </summary>
+        public void SignIn()
         {
             string clientId = null;
             string clientSecret = null;
@@ -101,19 +113,12 @@ namespace CountingApp.Services
 
             if (e.IsAuthenticated)
             {
-                if (_account != null)
+                if (CurAccount != null)
                 {
-                    _accountStore.Delete(_account, Constants.AppName);
+                    _accountStore.Delete(CurAccount, Constants.AppName);
                 }
 
-                await _accountStore.SaveAsync(_account = e.Account, Constants.AppName);
-
-                IsAuthenticated = true;
-                //var client = new HttpClient();
-                //client.SetBearerToken(e.Account.Properties["access_token"]);
-                //client.BaseAddress = new Uri("http://pc.mokhnatkin.org:5051/");
-                //var res = await client.GetAsync(new Uri("/api/values/"));
-                //{ }
+                await _accountStore.SaveAsync(CurAccount = e.Account, Constants.AppName);
             }
         }
 
