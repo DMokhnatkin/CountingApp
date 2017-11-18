@@ -111,10 +111,6 @@ namespace CountingApp.ViewModels
 
         public async Task Load()
         {
-            // TODO: It is not place for authorization
-            var authService = ApplicationIocContainer.CurrentContainer.Resolve<IAuthService>();
-            if (!authService.IsAuthenticated)
-                authService.Login();
             await ReloadTransactions();
         }
     }

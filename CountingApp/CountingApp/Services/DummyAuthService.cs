@@ -22,12 +22,7 @@ namespace CountingApp.Services
             throw new NotImplementedException();
         }
 
-        public RestClient GetRestClient()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Login()
+        public void SignIn()
         {
             throw new NotImplementedException();
         }
