@@ -49,7 +49,7 @@ namespace CountingApp.Views.Transactions
             ToolbarItems.Add(new ToolbarItem("Edit", "ic_edit_white_24dp.png", async () =>
             {
                 await Navigation.PushPopupAsync(new EntryDialog(
-                            new EntryDialogViewModel(async (text) => {
+                            new EntryDialogViewModel((text) => {
                                 if (!string.IsNullOrEmpty(text))
                                     Title = text;
                             })
@@ -59,7 +59,10 @@ namespace CountingApp.Views.Transactions
                                 KeyboardType = Keyboard.Default
                             }));
             }));
-            ToolbarItems.Add(new ToolbarItem("Done", "done.png", () => { }));
+            ToolbarItems.Add(new ToolbarItem("Done", "done.png", async () => {
+                MessagingCenter.Send(this, DoneMessage);
+                await Navigation.PopAsync();
+            }));
 
         }
     }

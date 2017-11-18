@@ -14,7 +14,7 @@ namespace CountingApp.ViewModels.Transactions
     public class PurchaseViewModel : BaseViewModel
     {
         /// <summary>
-        /// Ид транзакции (Guid.Empty если мы создаем новую)
+        /// Ид транзакции
         /// </summary>
         private readonly Guid _transactionId;
         private readonly Purchase _model;
@@ -29,7 +29,7 @@ namespace CountingApp.ViewModels.Transactions
             _model = new Purchase();
             Contributions = new ObservableCollection<Contribution>();
             Freeloaders = new ObservableCollection<Person>();
-
+            _transactionId = Guid.NewGuid();
         }
 
 

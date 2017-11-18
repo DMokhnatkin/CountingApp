@@ -10,6 +10,8 @@ using CountingApp.Models;
 using CountingApp.Services;
 using CountingApp.ViewModels.Transactions;
 using Xamarin.Forms;
+using CountingApp.Core.Dto;
+using System.Collections.Generic;
 
 namespace CountingApp.ViewModels
 {
@@ -17,11 +19,15 @@ namespace CountingApp.ViewModels
     {
         private readonly ITransactionsRepository _transactionsRepository;
 
+        private ObservableCollection<TransactionDto> _transactionsB = new ObservableCollection<TransactionDto>{
+            new TransactionDto(){ Id = Guid.NewGuid(), Timestamp = DateTime.Now, TotalAmount = 999 }
+        };
+
         public TransactionsViewModel()
         {
             _transactionsRepository = DependencyService.Get<ITransactionsRepository>();
 
-            Transactions = new ObservableCollection<TransactionListItemViewModel>();
+            Transactions = new ObservableCollection<TransactionListItemViewModel>() { new TransactionListItemViewModel(new PurchaseViewModel().GetModel()) };
         }
 
         #region Observable
@@ -31,6 +37,12 @@ namespace CountingApp.ViewModels
         {
             get => _transactions;
             set => SetProperty(ref _transactions, value);
+        }
+        
+        public ObservableCollection<TransactionDto> TransactionsB
+        {
+            get => _transactionsB;
+            set => SetProperty(ref _transactionsB, value);
         }
 
         #endregion
@@ -64,11 +76,12 @@ namespace CountingApp.ViewModels
         /// <returns></returns>
         public async Task ReloadTransactions()
         {
-            OccupyIsBusy();
+            //OccupyIsBusy();
 
             var transactions = await _transactionsRepository.GetAllAsync();
             Transactions = new ObservableCollection<TransactionListItemViewModel>(transactions.Select(x => new TransactionListItemViewModel(x.Unmap())));
-            ReleaseIsBusy();
+            
+            //ReleaseIsBusy();
         }
 
         public async Task ModifyTransaction(Transaction transaction)
